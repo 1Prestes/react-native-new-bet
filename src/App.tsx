@@ -2,12 +2,12 @@ import React from 'react'
 import { ThemeProvider } from 'styled-components'
 
 import { theme } from './assets/style/theme'
-import SignIn from './Pages/Sign-in'
+import Authentication from './Pages/Authentication'
 
 export default function App () {
   return (
     <ThemeProvider theme={theme}>
-      <SignIn />
+      <Authentication />
     </ThemeProvider>
   )
 }

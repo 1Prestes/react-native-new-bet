@@ -8,7 +8,7 @@ import {
 } from './Button-style'
 
 interface ButtonProps extends StyleButtonProps {
-  label: string
+  label?: string
   onPress?: () => void
   children?: React.ReactNode
 }
@@ -38,8 +38,8 @@ export default function Button (
         {...ButtonProps}
       >
         <TextButton weight={weight} color={color} fontSize={fontSize}>
-          {label}
           {children}
+          {label}
         </TextButton>
       </TouchableOpacityButton>
     </ButtonContainer>

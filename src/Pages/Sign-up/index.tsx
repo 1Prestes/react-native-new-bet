@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import * as yup from 'yup'
 import { AntDesign } from '@expo/vector-icons'
+import { Text } from 'react-native'
 
-import { Title, FormContainer, InputContainer } from './SignIn-style'
+import { Title, FormContainer, InputContainer } from './SignUp-style'
 import Input from '../../Components/Input'
 import { theme } from '../../assets/style/theme'
 import Button from '../../Components/Button'
@@ -18,62 +19,63 @@ const signInValidationSchema = yup.object().shape({
     .required()
 })
 
-export default function SignIn () {
-  const [login, setLogin] = useState({ email: '', password: '' })
+export default function SignUp () {
+  const [user, setUser] = useState({ name: '', email: '', password: '' })
 
-  const handleChange = (text: string, key: string) => {
-    console.log(text, key)
-    setLogin({ ...login, [key]: text })
+  const handleChange = (value: string, key: string) => {
+    console.log(value, key)
+    setUser({ ...user, [key]: value })
   }
 
   const handleClick = () => {
-    console.log(login)
+    console.log(user)
   }
 
   return (
     <FormContainer>
-      <Title style={{ fontSize: 34 }}>Authentication</Title>
+      <Title style={{ fontSize: 34 }}>Registration</Title>
       <InputContainer>
         <Input
           onChangeText={(value: string) => handleChange(value, 'email')}
-          value={login.email}
+          value={user.name}
+          placeholder='Name'
+        />
+        <Input
+          onChangeText={(value: string) => handleChange(value, 'email')}
           autoCapitalize='none'
+          value={user.email}
           placeholder='Email'
         />
         <Input
           onChangeText={(value: string) => handleChange(value, 'password')}
-          value={login.password}
           secureTextEntry
           autoCapitalize='none'
+          value={user.password}
           placeholder='Password'
         />
 
         <Button
-          align='flex-end'
-          margin='20px 31px'
-          label='I forgot my password'
-          weight='normal'
-          fontSize='14px'
-          color='#C1C1C1'
-        />
-        <Button
           onPress={handleClick}
+          margin='21px'
           fontSize='30px'
+          width='180px'
           color={theme.colors.green}
         >
-          Log In{' '}
-          <AntDesign name='arrowright' size={30} color={theme.colors.green} />
+          <Text>
+            Register{' '}
+            <AntDesign name='arrowright' size={30} color={theme.colors.green} />
+          </Text>
         </Button>
       </InputContainer>
       <Button
         onPress={handleClick}
+        label=' Back'
         fontSize='30px'
         color={theme.colors.primary_color}
         width='200px'
       >
-        Sign Up{' '}
         <AntDesign
-          name='arrowright'
+          name='arrowleft'
           size={30}
           color={theme.colors.primary_color}
         />
