@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { StatusBar } from 'expo-status-bar'
-import { View } from 'react-native'
+import { View, Text } from 'react-native'
 import * as yup from 'yup'
 import { AntDesign } from '@expo/vector-icons'
 
@@ -9,7 +9,8 @@ import {
   Container,
   BorderBottom,
   FormContainer,
-  InputContainer
+  InputContainer,
+  Footer
 } from './SignIn-styles'
 import Input from '../../Components/Input'
 import { theme } from '../../assets/style/theme'
@@ -71,20 +72,32 @@ export default function SignIn () {
           />
           <Button
             onPress={handleClick}
-            label='Log In'
+            label='Log In '
             fontSize='30px'
-            width='250px'
             color={theme.colors.green}
           >
-            <AntDesign
-              style={{ paddingLeft: 10 }}
-              name='arrowright'
-              size={25}
-              color={theme.colors.green}
-            />
+            <AntDesign name='arrowright' size={30} color={theme.colors.green} />
           </Button>
         </InputContainer>
+        <Button
+          onPress={handleClick}
+          label='Sign Up '
+          fontSize='30px'
+          color={theme.colors.primary_color}
+          width='200px'
+        >
+          <AntDesign
+            name='arrowright'
+            size={30}
+            color={theme.colors.primary_color}
+          />
+        </Button>
       </FormContainer>
+      <Footer>
+        <Text style={{ fontSize: 15, color: theme.colors.primary_color }}>
+          Copyright 2020 Luby Software
+        </Text>
+      </Footer>
     </Container>
   )
 }
