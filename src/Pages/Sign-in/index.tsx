@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import { StatusBar } from 'expo-status-bar'
-import { View, Text } from 'react-native'
+import { View, Text, KeyboardAvoidingView } from 'react-native'
 import * as yup from 'yup'
 import { AntDesign } from '@expo/vector-icons'
 
 import {
   Title,
   Container,
+  LogoContainer,
   BorderBottom,
   FormContainer,
-  InputContainer,
-  Footer
+  InputContainer
 } from './SignIn-styles'
 import Input from '../../Components/Input'
 import { theme } from '../../assets/style/theme'
@@ -40,64 +40,71 @@ export default function SignIn () {
   }
 
   return (
-    <Container>
-      <StatusBar style='auto' translucent={true} />
-      <View>
-        <Title>TGL</Title>
-        <BorderBottom />
-      </View>
+    <>
+      <Container>
+        <StatusBar style='auto' translucent={true} />
+        <KeyboardAvoidingView behavior='height' enabled>
+          <LogoContainer>
+            <Title>TGL</Title>
+            <BorderBottom />
+          </LogoContainer>
 
-      <FormContainer>
-        <Title style={{ fontSize: 34 }}>Authentication</Title>
-        <InputContainer>
-          <Input
-            onChangeText={(value: string) => handleChange(value, 'email')}
-            value={login.email}
-            placeholder='Email'
-          />
-          <Input
-            onChangeText={(value: string) => handleChange(value, 'password')}
-            value={login.password}
-            secureTextEntry
-            placeholder='Password'
-          />
+          <FormContainer>
+            <Title style={{ fontSize: 34 }}>Authentication</Title>
+            <InputContainer>
+              <Input
+                onChangeText={(value: string) => handleChange(value, 'email')}
+                value={login.email}
+                autoCapitalize='none'
+                placeholder='Email'
+              />
+              <Input
+                onChangeText={(value: string) =>
+                  handleChange(value, 'password')
+                }
+                value={login.password}
+                secureTextEntry
+                autoCapitalize='none'
+                placeholder='Password'
+              />
 
-          <Button
-            align='flex-end'
-            margin='20px 31px'
-            label='I forgot my password'
-            weight='normal'
-            fontSize='14px'
-            color='#C1C1C1'
-          />
-          <Button
-            onPress={handleClick}
-            label='Log In '
-            fontSize='30px'
-            color={theme.colors.green}
-          >
-            <AntDesign name='arrowright' size={30} color={theme.colors.green} />
-          </Button>
-        </InputContainer>
-        <Button
-          onPress={handleClick}
-          label='Sign Up '
-          fontSize='30px'
-          color={theme.colors.primary_color}
-          width='200px'
-        >
-          <AntDesign
-            name='arrowright'
-            size={30}
-            color={theme.colors.primary_color}
-          />
-        </Button>
-      </FormContainer>
-      <Footer>
-        <Text style={{ fontSize: 15, color: theme.colors.primary_color }}>
-          Copyright 2020 Luby Software
-        </Text>
-      </Footer>
-    </Container>
+              <Button
+                align='flex-end'
+                margin='20px 31px'
+                label='I forgot my password'
+                weight='normal'
+                fontSize='14px'
+                color='#C1C1C1'
+              />
+              <Button
+                onPress={handleClick}
+                label='Log In '
+                fontSize='30px'
+                color={theme.colors.green}
+              >
+                <AntDesign
+                  name='arrowright'
+                  size={30}
+                  color={theme.colors.green}
+                />
+              </Button>
+            </InputContainer>
+            <Button
+              onPress={handleClick}
+              label='Sign Up '
+              fontSize='30px'
+              color={theme.colors.primary_color}
+              width='200px'
+            >
+              <AntDesign
+                name='arrowright'
+                size={30}
+                color={theme.colors.primary_color}
+              />
+            </Button>
+          </FormContainer>
+        </KeyboardAvoidingView>
+      </Container>
+    </>
   )
 }
