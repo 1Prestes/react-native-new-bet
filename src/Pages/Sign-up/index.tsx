@@ -1,12 +1,21 @@
 import React, { useState } from 'react'
-import * as yup from 'yup'
+import { StatusBar } from 'expo-status-bar'
+import { Text, KeyboardAvoidingView } from 'react-native'
 import { AntDesign } from '@expo/vector-icons'
-import { Text } from 'react-native'
+import * as yup from 'yup'
 
-import { Title, FormContainer, InputContainer } from './SignUp-style'
+import {
+  Container,
+  LogoContainer,
+  BorderBottom,
+  Title,
+  FormContainer,
+  InputContainer
+} from './SignUp-style'
 import Input from '../../Components/Input'
 import { theme } from '../../assets/style/theme'
 import Button from '../../Components/Button'
+import { NavigationProps } from '../../routes'
 
 const signInValidationSchema = yup.object().shape({
   password: yup
@@ -19,7 +28,7 @@ const signInValidationSchema = yup.object().shape({
     .required()
 })
 
-export default function SignUp () {
+export default function SignUp ({ navigation }: NavigationProps) {
   const [user, setUser] = useState({ name: '', email: '', password: '' })
 
   const handleChange = (value: string, key: string) => {
@@ -32,54 +41,67 @@ export default function SignUp () {
   }
 
   return (
-    <FormContainer>
-      <Title style={{ fontSize: 34 }}>Registration</Title>
-      <InputContainer>
-        <Input
-          onChangeText={(value: string) => handleChange(value, 'email')}
-          value={user.name}
-          placeholder='Name'
-        />
-        <Input
-          onChangeText={(value: string) => handleChange(value, 'email')}
-          autoCapitalize='none'
-          value={user.email}
-          placeholder='Email'
-        />
-        <Input
-          onChangeText={(value: string) => handleChange(value, 'password')}
-          secureTextEntry
-          autoCapitalize='none'
-          value={user.password}
-          placeholder='Password'
-        />
+    <Container>
+      <StatusBar style='auto' translucent={true} />
+      <KeyboardAvoidingView behavior='height' enabled>
+        <LogoContainer>
+          <Title>TGL</Title>
+          <BorderBottom />
+        </LogoContainer>
+        <FormContainer>
+          <Title style={{ fontSize: 34 }}>Registration</Title>
+          <InputContainer>
+            <Input
+              onChangeText={(value: string) => handleChange(value, 'email')}
+              value={user.name}
+              placeholder='Name'
+            />
+            <Input
+              onChangeText={(value: string) => handleChange(value, 'email')}
+              autoCapitalize='none'
+              value={user.email}
+              placeholder='Email'
+            />
+            <Input
+              onChangeText={(value: string) => handleChange(value, 'password')}
+              secureTextEntry
+              autoCapitalize='none'
+              value={user.password}
+              placeholder='Password'
+            />
 
-        <Button
-          onPress={handleClick}
-          margin='21px'
-          fontSize='30px'
-          width='180px'
-          color={theme.colors.green}
-        >
-          <Text>
-            Register{' '}
-            <AntDesign name='arrowright' size={30} color={theme.colors.green} />
-          </Text>
-        </Button>
-      </InputContainer>
-      <Button
-        onPress={handleClick}
-        label=' Back'
-        fontSize='30px'
-        color={theme.colors.primary_color}
-        width='200px'
-      >
-        <AntDesign
-          name='arrowleft'
-          size={30}
-          color={theme.colors.primary_color}
-        />
-      </Button>
-    </FormContainer>
+            <Button
+              onPress={handleClick}
+              margin='21px'
+              fontSize='30px'
+              width='180px'
+              color={theme.colors.green}
+            >
+              <Text>
+                Register{' '}
+                <AntDesign
+                  name='arrowright'
+                  size={30}
+                  color={theme.colors.green}
+                />
+              </Text>
+            </Button>
+          </InputContainer>
+          <Button
+            onPress={() => navigation.goBack()}
+            label=' Back'
+            fontSize='30px'
+            color={theme.colors.primary_color}
+            width='200px'
+          >
+            <AntDesign
+              name='arrowleft'
+              size={30}
+              color={theme.colors.primary_color}
+            />
+          </Button>
+        </FormContainer>
+      </KeyboardAvoidingView>
+    </Container>
   )
 }
