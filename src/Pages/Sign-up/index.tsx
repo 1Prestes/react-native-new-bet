@@ -88,7 +88,7 @@ export default function SignUp ({ navigation }: NavigationProps) {
             </Button>
           </InputContainer>
           <Button
-            onPress={() => navigation.goBack()}
+            onPress={() => navigation.navigate('SignIn')}
             label=' Back'
             fontSize='30px'
             color={theme.colors.primary_color}

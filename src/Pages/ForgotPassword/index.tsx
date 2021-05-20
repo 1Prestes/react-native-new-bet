@@ -11,7 +11,7 @@ import {
   BorderBottom,
   FormContainer,
   InputContainer
-} from './SignIn-style'
+} from './FogotPassword-style'
 import Input from '../../Components/Input'
 import { theme } from '../../assets/style/theme'
 import Button from '../../Components/Button'
@@ -28,8 +28,8 @@ const signInValidationSchema = yup.object().shape({
     .required()
 })
 
-export default function SignIn ({ navigation }: NavigationProps) {
-  const [login, setLogin] = useState({ email: '', password: '' })
+export default function ForgotPassword ({ navigation }: NavigationProps) {
+  const [login, setLogin] = useState({ email: '' })
 
   const handleChange = (text: string, key: string) => {
     console.log(text, key)
@@ -50,7 +50,7 @@ export default function SignIn ({ navigation }: NavigationProps) {
         </LogoContainer>
 
         <FormContainer>
-          <Title style={{ fontSize: 34 }}>Authentication</Title>
+          <Title style={{ fontSize: 34 }}>Reset Password</Title>
           <InputContainer>
             <Input
               onChangeText={(value: string) => handleChange(value, 'email')}
@@ -58,29 +58,14 @@ export default function SignIn ({ navigation }: NavigationProps) {
               autoCapitalize='none'
               placeholder='Email'
             />
-            <Input
-              onChangeText={(value: string) => handleChange(value, 'password')}
-              value={login.password}
-              secureTextEntry
-              autoCapitalize='none'
-              placeholder='Password'
-            />
 
             <Button
-              onPress={() => navigation.navigate('ForgotPassword')}
-              align='flex-end'
-              margin='20px 31px'
-              label='I forgot my password'
-              weight='normal'
-              fontSize='14px'
-              color='#C1C1C1'
-            />
-            <Button
               onPress={handleClick}
+              width='180px'
               fontSize='30px'
               color={theme.colors.green}
             >
-              Log In{' '}
+              Send link{' '}
               <AntDesign
                 name='arrowright'
                 size={30}
@@ -88,11 +73,28 @@ export default function SignIn ({ navigation }: NavigationProps) {
               />
             </Button>
           </InputContainer>
+
           <Button
-            onPress={() => navigation.navigate('SignUp')}
+            onPress={() => navigation.navigate('SignIn')}
+            width='200px'
+            margin='6px auto'
             fontSize='30px'
             color={theme.colors.primary_color}
+          >
+            <AntDesign
+              name='arrowleft'
+              size={30}
+              color={theme.colors.primary_color}
+            />{' '}
+            Back
+          </Button>
+
+          <Button
+            onPress={() => navigation.navigate('SignUp')}
             width='200px'
+            margin='59px auto'
+            fontSize='30px'
+            color={theme.colors.primary_color}
           >
             Sign Up{' '}
             <AntDesign
