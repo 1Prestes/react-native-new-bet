@@ -38,6 +38,7 @@ export default function SignIn ({ navigation }: NavigationProps) {
 
   const handleClick = () => {
     console.log(login)
+    navigation.navigate('Home')
   }
 
   return (

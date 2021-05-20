@@ -3,11 +3,12 @@ import styled from 'styled-components/native'
 export interface StyleButtonProps {
   bg?: string
   fontSize?: string
-  color?: string
   width?: string
   align?: string
   margin?: string
   weight?: string
+  color?: string
+  bColor?: string
 }
 
 export const ButtonContainer = styled.View<StyleButtonProps>`
@@ -17,6 +18,9 @@ export const ButtonContainer = styled.View<StyleButtonProps>`
 
 export const TouchableOpacityButton = styled.TouchableOpacity<StyleButtonProps>`
   background-color: ${props => props.bg ?? 'transparent'};
+  border-radius: 100px;
+  border-width: 2px;
+  border-color: ${props => props.bColor ?? 'transparent'};
   margin: ${props => props.margin ?? 'auto'};
   width: ${props => props.width ?? '160px'};
 `

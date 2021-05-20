@@ -5,11 +5,13 @@ import { StackNavigationProp } from '@react-navigation/stack'
 import SignIn from './Pages/Sign-in'
 import SignUp from './Pages/Sign-up'
 import ForgotPassword from './Pages/ForgotPassword'
+import Home from './Pages/Home'
 
 type RootStackParamList = {
   SignIn: undefined
   SignUp: undefined
   ForgotPassword: undefined
+  Home: undefined
 }
 
 type ProfileScreenNavigationProp = StackNavigationProp<RootStackParamList>
@@ -26,6 +28,7 @@ export default function Routes () {
       <Stack.Screen name='SignIn' component={SignIn} />
       <Stack.Screen name='SignUp' component={SignUp} />
       <Stack.Screen name='ForgotPassword' component={ForgotPassword} />
+      <Stack.Screen name='Home' component={Home} />
     </Stack.Navigator>
   )
 }

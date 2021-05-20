@@ -24,6 +24,7 @@ export default function Button (
     weight,
     fontSize,
     color,
+    bColor,
     children
   }: ButtonProps,
   { ...ButtonProps }
@@ -35,6 +36,7 @@ export default function Button (
         bg={bg}
         margin={margin}
         width={width}
+        bColor={bColor}
         {...ButtonProps}
       >
         <TextButton weight={weight} color={color} fontSize={fontSize}>
