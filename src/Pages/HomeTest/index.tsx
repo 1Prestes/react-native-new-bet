@@ -1,8 +1,7 @@
 import React from 'react'
 import { View, Text } from 'react-native'
-import { NavigationContainer } from '@react-navigation/native';
-
 import Button from '../../Components/Button'
+
 import Header from '../../Components/Header'
 import Navbar from '../../Components/Navbar'
 import CustomText from '../../Components/CustomText'
@@ -14,9 +13,9 @@ import {
   Bet,
   BorderLeft,
   BetInfo
-} from './Home-style'
+} from './HomeTest-style'
 
-export default function Home () {
+export default function HomeTest () {
   return (
     <>
       <Header />
@@ -217,7 +216,7 @@ export default function Home () {
           </Bet>
         </BetsContainer>
       </Bets>
-      {/* <Navbar /> */}
+      <Navbar />
     </>
   )
 }

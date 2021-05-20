@@ -1,24 +1,24 @@
 import React from 'react'
-import { StatusBar } from 'expo-status-bar'
 import { View, Text } from 'react-native'
-import { Feather } from '@expo/vector-icons'
+import { MaterialCommunityIcons } from '@expo/vector-icons'
 
-import {
-  NavbarContainer,
-  LogoContainer,
-  Title,
-  BorderBottom
-} from './Navbar-style'
+import { Container } from './Navbar-style'
+import CustomText from '../CustomText'
+import { theme } from '../../assets/style/theme'
 
 export default function Navbar () {
   return (
-    <NavbarContainer>
-      <LogoContainer>
-        <Title>TGL</Title>
-        <BorderBottom />
-      </LogoContainer>
-
-      <Feather name='log-out' size={26} color='#C1C1C1' />
-    </NavbarContainer>
+    <Container>
+      <View>
+        <MaterialCommunityIcons
+          name='home-outline'
+          size={25}
+          color={theme.colors.green}
+        />
+        <CustomText>Home</CustomText>
+      </View>
+      <Text>New Bet</Text>
+      <Text>Account</Text>
+    </Container>
   )
 }

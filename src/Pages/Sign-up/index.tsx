@@ -15,7 +15,7 @@ import {
 import Input from '../../Components/Input'
 import { theme } from '../../assets/style/theme'
 import Button from '../../Components/Button'
-import { NavigationProps } from '../../routes'
+import { NavigationProps } from '../../Routes/stack-routes'
 
 const signInValidationSchema = yup.object().shape({
   password: yup

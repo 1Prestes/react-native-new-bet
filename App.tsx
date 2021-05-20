@@ -4,13 +4,13 @@ import { NavigationContainer } from '@react-navigation/native'
 import { ThemeProvider } from 'styled-components'
 
 import { theme } from './src/assets/style/theme'
-import Routes from './src/routes'
+import StackRoutes from './src/Routes/stack-routes'
 
 export default function App () {
   return (
     <ThemeProvider theme={theme}>
       <NavigationContainer>
-        <Routes />
+        <StackRoutes />
       </NavigationContainer>
     </ThemeProvider>
   )
