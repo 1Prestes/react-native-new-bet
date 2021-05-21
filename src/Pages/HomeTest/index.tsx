@@ -3,7 +3,6 @@ import { View, Text } from 'react-native'
 import Button from '../../Components/Button'
 
 import Header from '../../Components/Header'
-import Navbar from '../../Components/Navbar'
 import CustomText from '../../Components/CustomText'
 import {
   Container,
@@ -21,7 +20,7 @@ export default function HomeTest () {
       <Header />
       <Container>
         <CustomText margin='26px 0 15px 0' size='22px'>
-          Recent games
+          New Bet For Lotery
         </CustomText>
         <CustomText weight='normal' size='22px'>
           Filters
@@ -216,7 +215,6 @@ export default function HomeTest () {
           </Bet>
         </BetsContainer>
       </Bets>
-      <Navbar />
     </>
   )
 }
