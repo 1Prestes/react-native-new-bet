@@ -40,12 +40,13 @@ export default function Home () {
           </Button>
 
           <Button
-            bg='#fff'
+            selected={true}
+            bg='#01AC66'
             width='105px'
             weight='normal'
             fontSize='14px'
             bColor='#01AC66'
-            color='#01AC66'
+            color='#fff'
             margin='0 9px 0 0'
           >
             Mega-Sena

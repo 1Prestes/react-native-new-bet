@@ -1,4 +1,5 @@
 import React from 'react'
+import { Octicons } from '@expo/vector-icons'
 
 import {
   StyleButtonProps,
@@ -6,11 +7,13 @@ import {
   TouchableOpacityButton,
   TextButton
 } from './Button-style'
+import { View } from 'react-native'
 
 interface ButtonProps extends StyleButtonProps {
   label?: string
   onPress?: () => void
   children?: React.ReactNode
+  selected?: boolean
 }
 
 export default function Button (
@@ -25,6 +28,7 @@ export default function Button (
     fontSize,
     color,
     bColor,
+    selected,
     children
   }: ButtonProps,
   { ...ButtonProps }
@@ -42,6 +46,11 @@ export default function Button (
         <TextButton weight={weight} color={color} fontSize={fontSize}>
           {children}
           {label}
+          {selected && (
+            <View style={{ paddingBottom: 4 }}>
+              <Octicons name='x' size={10} color='#FFF' />
+            </View>
+          )}
         </TextButton>
       </TouchableOpacityButton>
     </ButtonContainer>
