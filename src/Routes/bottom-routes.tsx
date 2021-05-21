@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 
 import Home from '../Pages/Home'
-import HomeTest from '../Pages/HomeTest'
+import NewBet from '../Pages/NewBet'
 import {
   NavItemAccount,
   NavItemHome,
@@ -34,14 +34,14 @@ function BottomRoutes () {
       />
       <Tab.Screen
         name='NewBet'
-        component={HomeTest}
+        component={NewBet}
         options={{
           tabBarIcon: () => <NavItemNewBet />
         }}
       />
       <Tab.Screen
         name='HomeTest'
-        component={HomeTest}
+        component={NewBet}
         options={{
           tabBarIcon: ({ focused }) => <NavItemAccount focused={focused} />
         }}
