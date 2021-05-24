@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { StatusBar } from 'expo-status-bar'
 import { KeyboardAvoidingView } from 'react-native'
 import { AntDesign } from '@expo/vector-icons'
@@ -34,16 +34,17 @@ export default function SignIn ({ navigation }: NavigationProps) {
   const dispatch = useDispatch()
   const session = useSelector(state => state)
   const [login, setLogin] = useState({ email: '', password: '' })
+  const [token, setToken] = useState(null)
 
   const handleChange = (text: string, key: string) => {
     // console.log(text, key)
     setLogin({ ...login, [key]: text })
   }
 
+  useEffect(() => {}, [session])
+
   const handleClick = () => {
     dispatch(setAuth(login))
-    console.log(session)
-    // navigation.navigate('Home')
   }
 
   return (

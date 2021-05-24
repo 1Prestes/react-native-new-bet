@@ -6,14 +6,14 @@ import { ThemeProvider } from 'styled-components'
 
 import { store } from './src/store/store'
 import { theme } from './src/assets/style/theme'
-import StackRoutes from './src/Routes/stack-routes'
+import BottomRoutes from './src/Routes/bottom-routes'
 
 export default function App () {
   return (
     <Provider store={store}>
       <ThemeProvider theme={theme}>
         <NavigationContainer>
-          <StackRoutes />
+          <BottomRoutes />
         </NavigationContainer>
       </ThemeProvider>
     </Provider>

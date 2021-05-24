@@ -18,7 +18,8 @@ export const setAuth = createAsyncThunk(
 const sessionSlice = createSlice({
   name: 'session',
   initialState: {
-    error: ''
+    error: '',
+    token: null
   },
   reducers: {
     LOGOUT_USER (state) {
