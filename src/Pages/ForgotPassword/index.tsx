@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { StatusBar } from 'expo-status-bar'
 import { KeyboardAvoidingView } from 'react-native'
 import { AntDesign } from '@expo/vector-icons'
@@ -16,12 +16,11 @@ import Input from '../../Components/Input'
 import { theme } from '../../assets/style/theme'
 import Button from '../../Components/Button'
 import { NavigationProps } from '../../Routes/stack-routes'
+import { useAppDispatch, useAppSelector } from '../../store/hooks'
+import showMessage from '../../helpers/toasts'
+import { forgotPassword } from '../../store/recoverPassword'
 
-const signInValidationSchema = yup.object().shape({
-  password: yup
-    .string()
-    .min(6)
-    .required(),
+const emailValidationSchema = yup.object().shape({
   email: yup
     .string()
     .email()
@@ -29,15 +28,42 @@ const signInValidationSchema = yup.object().shape({
 })
 
 export default function ForgotPassword ({ navigation }: NavigationProps) {
-  const [login, setLogin] = useState({ email: '' })
+  const [email, setEmail] = useState({ email: '' })
+  const dispatch = useAppDispatch()
+  const error = useAppSelector(state => state.password.error)
 
-  const handleChange = (text: string, key: string) => {
-    console.log(text, key)
-    setLogin({ ...login, [key]: text })
+  useEffect(() => {
+    if (error) {
+      showMessage('error', error)
+    }
+  }, [error])
+
+  const handleChange = (value: string) => {
+    setEmail({ email: value })
   }
 
   const handleClick = () => {
-    console.log(login)
+    emailValidationSchema
+      .validate(email)
+      .then(() => {
+        const data = {
+          email: email.email,
+          redirect_url: 'http://localhost:3000/authentication/reset-password/'
+        }
+        dispatch(forgotPassword(data))
+          .then(res => {
+            if (res.payload === undefined) {
+              return
+            }
+            showMessage('success', 'Success, check your inbox', 2000)
+            setTimeout(() => {
+              setEmail({ email: '' })
+              navigation.navigate('SignIn')
+            }, 2000)
+          })
+          .catch(err => console.log(err))
+      })
+      .catch(err => showMessage('error', err.errors[0]))
   }
 
   return (
@@ -53,15 +79,15 @@ export default function ForgotPassword ({ navigation }: NavigationProps) {
           <Title style={{ fontSize: 34 }}>Reset Password</Title>
           <InputContainer>
             <Input
-              onChangeText={(value: string) => handleChange(value, 'email')}
-              value={login.email}
+              onChangeText={handleChange}
+              value={email.email}
               autoCapitalize='none'
               placeholder='Email'
             />
 
             <Button
               onPress={handleClick}
-              width='180px'
+              width='190px'
               fontSize='30px'
               color={theme.colors.green}
             >

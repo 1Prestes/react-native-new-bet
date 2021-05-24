@@ -2,9 +2,20 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
 import api from '../utils/axios-http-client'
 
+interface ForgotPassword {
+  email: string
+  redirect_url: string
+}
+
+interface NewPassword {
+  token: string
+  password: string
+  password_confirmation: string
+}
+
 export const forgotPassword = createAsyncThunk(
   'recover/forgotPassword',
-  async data => {
+  async (data: ForgotPassword, thunkApi) => {
     const response = await api.post('/passwords', data).then(res => res)
     return response.data
   }
@@ -12,7 +23,7 @@ export const forgotPassword = createAsyncThunk(
 
 export const resetPassword = createAsyncThunk(
   'recover/resetPassword',
-  async newPassword => {
+  async (newPassword: NewPassword) => {
     const response = await api.put('/passwords', newPassword)
     return response.data
   }
