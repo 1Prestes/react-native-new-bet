@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
 import api from '../utils/axios-http-client'
-import { getToken, saveToken } from '../helpers/storageToken'
+import { getToken, removeToken, saveToken } from '../helpers/storageToken'
 
 interface Login {
   email: string
@@ -33,7 +33,8 @@ const sessionSlice = createSlice({
   },
   reducers: {
     LOGOUT_USER (state) {
-      return { ...state, error: '' }
+      removeToken()
+      return { ...state, token: '', error: '' }
     },
     CLEAR_SESSION (state) {
       return { ...state, error: '' }

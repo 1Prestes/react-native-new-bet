@@ -13,3 +13,7 @@ export async function getToken () {
     alert('No values stored under that key.')
   }
 }
+
+export async function removeToken () {
+  await SecureStore.deleteItemAsync('authToken')
+}
