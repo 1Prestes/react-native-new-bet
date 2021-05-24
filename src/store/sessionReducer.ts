@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
 import api from '../utils/axios-http-client'
+import { getToken, saveToken } from '../helpers/storageToken'
 
 interface Login {
   email: string
@@ -15,15 +16,24 @@ export const setAuth = createAsyncThunk(
   }
 )
 
+export const getCurrentToken = createAsyncThunk(
+  'session/getCurrentToken',
+  async () => {
+    const token = await getToken()
+
+    return token
+  }
+)
+
 const sessionSlice = createSlice({
   name: 'session',
   initialState: {
     error: '',
-    token: null
+    token: ''
   },
   reducers: {
     LOGOUT_USER (state) {
-      return state
+      return { ...state, error: '' }
     },
     CLEAR_SESSION (state) {
       return { ...state, error: '' }
@@ -31,13 +41,12 @@ const sessionSlice = createSlice({
   },
   extraReducers: builder => {
     builder.addCase(setAuth.fulfilled, (state, action) => {
-      console.log(action.payload)
+      saveToken(action.payload.token)
 
       return { ...state, token: action.payload.token, error: '' }
     })
 
     builder.addCase(setAuth.rejected, (state, action) => {
-      console.log(action)
       let error = ''
       if (action.error.message === 'Request failed with status code 401') {
         error = 'Error, check the data and try again'
@@ -49,6 +58,16 @@ const sessionSlice = createSlice({
       }
 
       return { ...state, error: error }
+    })
+
+    builder.addCase(getCurrentToken.fulfilled, (state, action) => {
+      const token = action.payload
+
+      if (token) {
+        state.token = token
+      }
+
+      return { ...state, error: '' }
     })
   }
 })

@@ -13,6 +13,7 @@ import {
 export default function Header () {
   return (
     <HeaderContainer>
+      <StatusBar style='auto' translucent={true} />
       <LogoContainer>
         <Title>TGL</Title>
         <BorderBottom />

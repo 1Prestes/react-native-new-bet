@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import * as SecureStore from 'expo-secure-store'
 
+import { useAppSelector } from '../store/hooks'
 import Home from '../Pages/Home'
 import NewBet from '../Pages/NewBet'
 import {
@@ -11,7 +13,6 @@ import {
 import SignIn from '../Pages/Sign-in'
 import SignUp from '../Pages/Sign-up'
 import ForgotPassword from '../Pages/ForgotPassword'
-import { useAppSelector } from '../store/hooks'
 const Tab = createBottomTabNavigator()
 
 function BottomRoutes () {

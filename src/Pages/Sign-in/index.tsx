@@ -17,7 +17,7 @@ import { theme } from '../../assets/style/theme'
 import Button from '../../Components/Button'
 import { NavigationProps } from '../../Routes/stack-routes'
 import { useDispatch, useSelector } from 'react-redux'
-import { setAuth } from '../../store/sessionReducer'
+import { getCurrentToken, setAuth } from '../../store/sessionReducer'
 
 const signInValidationSchema = yup.object().shape({
   password: yup
@@ -37,7 +37,6 @@ export default function SignIn ({ navigation }: NavigationProps) {
   const [token, setToken] = useState(null)
 
   const handleChange = (text: string, key: string) => {
-    // console.log(text, key)
     setLogin({ ...login, [key]: text })
   }
 
