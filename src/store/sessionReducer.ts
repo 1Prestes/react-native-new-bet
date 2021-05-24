@@ -28,23 +28,30 @@ export const getCurrentToken = createAsyncThunk(
 const sessionSlice = createSlice({
   name: 'session',
   initialState: {
-    error: '',
-    token: ''
+    loading: false,
+    token: '',
+    error: ''
   },
   reducers: {
     LOGOUT_USER (state) {
       removeToken()
       return { ...state, token: '', error: '' }
-    },
-    CLEAR_SESSION (state) {
-      return { ...state, error: '' }
     }
   },
   extraReducers: builder => {
+    builder.addCase(setAuth.pending, state => {
+      return { ...state, loading: true }
+    })
+
     builder.addCase(setAuth.fulfilled, (state, action) => {
       saveToken(action.payload.token)
 
-      return { ...state, token: action.payload.token, error: '' }
+      return {
+        ...state,
+        loading: false,
+        token: action.payload.token,
+        error: ''
+      }
     })
 
     builder.addCase(setAuth.rejected, (state, action) => {
@@ -73,5 +80,5 @@ const sessionSlice = createSlice({
   }
 })
 
-export const { LOGOUT_USER, CLEAR_SESSION } = sessionSlice.actions
+export const { LOGOUT_USER } = sessionSlice.actions
 export default sessionSlice.reducer
