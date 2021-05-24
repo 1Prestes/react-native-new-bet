@@ -1,13 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit'
 
-// import userReducer from './userReducer'
+import userReducer from './userReducer'
 // import gamesReducer from './gamesReducer'
 import sessionReducer from './sessionReducer'
 import recoverReducer from './recoverPassword'
 
 export const store = configureStore({
   reducer: {
-    // user: userReducer,
+    user: userReducer,
     // games: gamesReducer,
     session: sessionReducer,
     password: recoverReducer

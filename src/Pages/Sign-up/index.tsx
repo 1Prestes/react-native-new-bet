@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { StatusBar } from 'expo-status-bar'
 import { Text, KeyboardAvoidingView } from 'react-native'
 import { AntDesign } from '@expo/vector-icons'
@@ -16,8 +16,12 @@ import Input from '../../Components/Input'
 import { theme } from '../../assets/style/theme'
 import Button from '../../Components/Button'
 import { NavigationProps } from '../../Routes/stack-routes'
+import showMessage from '../../helpers/toasts'
+import { CLEAR_USER_ERROR, createUser } from '../../store/userReducer'
+import { setAuth } from '../../store/sessionReducer'
+import { useAppDispatch, useAppSelector } from '../../store/hooks'
 
-const signInValidationSchema = yup.object().shape({
+const signUpValidationSchema = yup.object().shape({
   password: yup
     .string()
     .min(6)
@@ -25,19 +29,57 @@ const signInValidationSchema = yup.object().shape({
   email: yup
     .string()
     .email()
-    .required()
+    .required(),
+  username: yup
+    .string()
+    .min(3)
+    .required('')
 })
 
 export default function SignUp ({ navigation }: NavigationProps) {
-  const [user, setUser] = useState({ name: '', email: '', password: '' })
+  const [newUser, setNewUser] = useState({
+    username: '',
+    email: '',
+    password: ''
+  })
 
   const handleChange = (value: string, key: string) => {
     console.log(value, key)
-    setUser({ ...user, [key]: value })
+    setNewUser({ ...newUser, [key]: value })
   }
 
+  const currentUser = useAppSelector(state => state.user)
+  const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    if (currentUser.error) showMessage('error', currentUser.error)
+  }, [currentUser.error])
+
   const handleClick = () => {
-    console.log(user)
+    signUpValidationSchema
+      .validate(newUser)
+      .then(res => {
+        dispatch(createUser(res)).then(() => {
+          const { email, password } = res
+          dispatch(setAuth({ email, password })).then(res => {
+            console.log(res)
+            if (res.payload) {
+              showMessage(
+                'success',
+                'Sign-up successfully, you will be redirected in 2 seconds',
+                2000
+              )
+
+              // return setTimeout(() => {
+              //   navigation.navigate()
+              // }, 2000)
+            }
+
+            dispatch(CLEAR_USER_ERROR())
+          })
+        })
+      })
+      .catch(err => showMessage('error', err.errors[0]))
   }
 
   return (
@@ -52,21 +94,21 @@ export default function SignUp ({ navigation }: NavigationProps) {
           <Title style={{ fontSize: 34 }}>Registration</Title>
           <InputContainer>
             <Input
-              onChangeText={(value: string) => handleChange(value, 'email')}
-              value={user.name}
+              onChangeText={(value: string) => handleChange(value, 'username')}
+              value={newUser.username}
               placeholder='Name'
             />
             <Input
               onChangeText={(value: string) => handleChange(value, 'email')}
               autoCapitalize='none'
-              value={user.email}
+              value={newUser.email}
               placeholder='Email'
             />
             <Input
               onChangeText={(value: string) => handleChange(value, 'password')}
               secureTextEntry
               autoCapitalize='none'
-              value={user.password}
+              value={newUser.password}
               placeholder='Password'
             />
 
