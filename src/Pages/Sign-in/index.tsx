@@ -18,6 +18,7 @@ import Button from '../../Components/Button'
 import { NavigationProps } from '../../Routes/stack-routes'
 import { useDispatch, useSelector } from 'react-redux'
 import { getCurrentToken, setAuth } from '../../store/sessionReducer'
+import showMessage from '../../helpers/toasts'
 
 const signInValidationSchema = yup.object().shape({
   password: yup
@@ -43,7 +44,13 @@ export default function SignIn ({ navigation }: NavigationProps) {
   useEffect(() => {}, [session])
 
   const handleClick = () => {
-    dispatch(setAuth(login))
+    signInValidationSchema
+      .validate(login)
+      .then(res => {
+        console.log(res)
+        // dispatch(setAuth(login))
+      })
+      .catch(err => showMessage('error', err.errors[0]))
   }
 
   return (

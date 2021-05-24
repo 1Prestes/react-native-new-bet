@@ -3,6 +3,7 @@ import React from 'react'
 import { Provider } from 'react-redux'
 import { NavigationContainer } from '@react-navigation/native'
 import { ThemeProvider } from 'styled-components'
+import Toast from 'react-native-toast-message'
 
 import { store } from './src/store/store'
 import { theme } from './src/assets/style/theme'
@@ -16,6 +17,7 @@ export default function App () {
           <BottomRoutes />
         </NavigationContainer>
       </ThemeProvider>
+      <Toast ref={ref => Toast.setRef(ref)} />
     </Provider>
   )
 }
