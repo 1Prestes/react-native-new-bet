@@ -17,7 +17,11 @@ import { theme } from '../../assets/style/theme'
 import Button from '../../Components/Button'
 import { NavigationProps } from '../../Routes/stack-routes'
 import { useDispatch, useSelector } from 'react-redux'
-import { getCurrentToken, setAuth } from '../../store/sessionReducer'
+import {
+  CLEAR_SESSION,
+  getCurrentToken,
+  setAuth
+} from '../../store/sessionReducer'
 import showMessage from '../../helpers/toasts'
 import { useAppSelector } from '../../store/hooks'
 
@@ -34,9 +38,16 @@ const signInValidationSchema = yup.object().shape({
 
 export default function SignIn ({ navigation }: NavigationProps) {
   const dispatch = useDispatch()
-  const session = useSelector(state => state)
+  const session = useAppSelector(state => state.session)
   const [login, setLogin] = useState({ email: '', password: '' })
   const loading = useAppSelector(state => state.session.loading)
+
+  useEffect(() => {
+    if (session.error) {
+      showMessage('error', session.error)
+      dispatch(CLEAR_SESSION())
+    }
+  }, [session])
 
   const handleChange = (text: string, key: string) => {
     setLogin({ ...login, [key]: text })

@@ -36,6 +36,9 @@ const sessionSlice = createSlice({
     LOGOUT_USER (state) {
       removeToken()
       return { ...state, token: '', error: '' }
+    },
+    CLEAR_SESSION (state) {
+      return { ...state, error: '' }
     }
   },
   extraReducers: builder => {
@@ -65,7 +68,7 @@ const sessionSlice = createSlice({
           'Error connecting to the server, try again or wait a few minutes'
       }
 
-      return { ...state, error: error }
+      return { ...state, loading: false, error: error }
     })
 
     builder.addCase(getCurrentToken.fulfilled, (state, action) => {
@@ -80,5 +83,5 @@ const sessionSlice = createSlice({
   }
 })
 
-export const { LOGOUT_USER } = sessionSlice.actions
+export const { LOGOUT_USER, CLEAR_SESSION } = sessionSlice.actions
 export default sessionSlice.reducer
