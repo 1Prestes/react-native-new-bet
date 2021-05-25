@@ -21,7 +21,7 @@ export const Bets = styled.View`
 `
 
 export const BetsContainer = styled.ScrollView`
-  margin-top: 16px;
+  padding-top: 16px;
 `
 export const Bet = styled.View`
   flex-direction: row;

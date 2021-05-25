@@ -1,5 +1,9 @@
 import styled from 'styled-components/native'
 
+interface NumberProps {
+  bgColor: string
+}
+
 export const Container = styled.View`
   background-color: ${props => props.theme.bg};
   padding: 0 20px;
@@ -28,9 +32,9 @@ export const NumbersContainer = styled.View`
   flex-wrap: wrap;
   margin: 0 7.5px 25px 7.5px;
 `
-export const Number = styled.View`
+export const Number = styled.TouchableOpacity<NumberProps>`
   flex-direction: row;
-  background-color: #adc0c4;
+  background-color: ${props => props.bgColor};
   margin: 10px 5px;
   width: 59px;
   height: 59px;
