@@ -17,7 +17,6 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks'
 import { fetchBets, fetchGames } from '../../store/gamesReducer'
 import showMessage from '../../helpers/toasts'
 import { floatToReal } from '../../helpers/floatToReal'
-import { Text } from 'react-native'
 
 interface Bet {
   id: string
@@ -35,6 +34,9 @@ export default function Home () {
   const cart = useAppSelector(state => state.games.cart)
   const token = useAppSelector(state => state.session.token)
   const betCheckout: Bet[] = useAppSelector(state => state.games.checkout)
+
+  const [selectedGames, setSelectedGames] = useState([0])
+
   const dispatch = useAppDispatch()
 
   useEffect(() => {
@@ -52,6 +54,60 @@ export default function Home () {
     }
   }, [error])
 
+  const selectFilter = (id: number) => {
+    const exists = selectedGames.some(item => item === id)
+    if (!exists) {
+      const gameSelected = games.filter(game => game.id === id)
+      setSelectedGames([...selectedGames, gameSelected[0].id])
+    } else {
+      const gamesSelected = selectedGames.filter(filterId => filterId !== id)
+      setSelectedGames(gamesSelected)
+    }
+  }
+
+  const betTemplate = (
+    id: string,
+    game_id: number,
+    betnumbers: string,
+    price: number
+  ) => {
+    return (
+      <Bet key={id}>
+        <BorderLeft
+          color={games.filter(game => game.id === game_id)[0]?.color}
+        />
+        <BetInfo>
+          <CustomText size='12px' color='#868686'>
+            {betnumbers
+              .split(',')
+              .map(number => Number(number))
+              .slice()
+              .sort((a, b) => a - b)
+              .map(number => {
+                return number < 10 ? `0${number}` : number
+              })
+              .join(', ')}
+          </CustomText>
+          <CustomText
+            margin='12px 0'
+            style='normal'
+            size='12px'
+            weight='normal'
+            color='#868686'
+          >
+            {moment().format('DD/MM/YYYY')} - (R$ {floatToReal(price)})
+          </CustomText>
+          <CustomText
+            size='16px'
+            color={games.filter(game => game.id === game_id)[0]?.color}
+          >
+            {games.filter(game => game.id === game_id)[0]?.type}
+          </CustomText>
+        </BetInfo>
+      </Bet>
+    )
+  }
+
   return (
     <>
       <Header />
@@ -66,15 +122,26 @@ export default function Home () {
         <FilterContainer horizontal={true}>
           {!!games[0].type &&
             games.map(game => {
+              let color = game.color
+              let bg = '#fff'
+
+              const exists = selectedGames.includes(game.id)
+              if (exists) {
+                color = '#fff'
+                bg = game.color
+              }
+
               return (
                 <Button
                   key={game.id}
-                  bg='#fff'
+                  onPress={() => selectFilter(game.id)}
+                  bg={bg}
+                  selected={exists}
                   width='105px'
                   weight='normal'
-                  fontSize='14px'
                   bColor={game.color}
-                  color={game.color}
+                  fontSize='14px'
+                  color={color}
                   margin='0 9px 0 0'
                 >
                   {game.type}
@@ -88,194 +155,23 @@ export default function Home () {
         <BetsContainer>
           {betCheckout &&
             betCheckout.map(bet => {
-              return (
-                <Bet key={bet.id}>
-                  <BorderLeft
-                    color={
-                      games.filter(game => game.id === bet.game_id)[0]?.color
-                    }
-                  />
-                  <BetInfo>
-                    <CustomText size='12px' color='#868686'>
-                      {bet.betnumbers
-                        .split(',')
-                        .map(number => Number(number))
-                        .slice()
-                        .sort((a, b) => a - b)
-                        .map(number => {
-                          return number < 10 ? `0${number}` : number
-                        })
-                        .join(', ')}
-                    </CustomText>
-                    <CustomText
-                      margin='12px 0'
-                      style='normal'
-                      size='12px'
-                      weight='normal'
-                      color='#868686'
-                    >
-                      {moment().format('DD/MM/YYYY')} - (R${' '}
-                      {floatToReal(bet.price)})
-                    </CustomText>
-                    <CustomText
-                      size='16px'
-                      color={
-                        games.filter(game => game.id === bet.game_id)[0]?.color
-                      }
-                    >
-                      {games.filter(game => game.id === bet.game_id)[0]?.type}
-                    </CustomText>
-                  </BetInfo>
-                </Bet>
-              )
+              const exists = selectedGames.includes(bet.game_id)
+              if (selectedGames.length > 1 && exists) {
+                return betTemplate(
+                  bet.id,
+                  bet.game_id,
+                  bet.betnumbers,
+                  bet.price
+                )
+              } else if (selectedGames.length === 1) {
+                return betTemplate(
+                  bet.id,
+                  bet.game_id,
+                  bet.betnumbers,
+                  bet.price
+                )
+              }
             })}
-
-          <Bet>
-            <BorderLeft color='#7F3992' />
-            <BetInfo>
-              <CustomText size='12px' color='#868686'>
-                01, 02, 04, 05, 06, 07, 09, 15, 17, 20, 21, 22, 23, 24, 25
-              </CustomText>
-              <CustomText
-                margin='12px 0'
-                style='normal'
-                size='12px'
-                weight='normal'
-                color='#868686'
-              >
-                29/11/2020 - (R$ 2,50)
-              </CustomText>
-              <CustomText size='16px' color='#7F3992'>
-                Lotofácil
-              </CustomText>
-            </BetInfo>
-          </Bet>
-
-          <Bet>
-            <BorderLeft color='#7F3992' />
-            <BetInfo>
-              <CustomText size='12px' color='#868686'>
-                01, 02, 04, 05, 06, 07, 09, 15, 17, 20, 21, 22, 23, 24, 25
-              </CustomText>
-              <CustomText
-                margin='12px 0'
-                style='normal'
-                size='12px'
-                weight='normal'
-                color='#868686'
-              >
-                29/11/2020 - (R$ 2,50)
-              </CustomText>
-              <CustomText size='16px' color='#7F3992'>
-                Lotofácil
-              </CustomText>
-            </BetInfo>
-          </Bet>
-
-          <Bet>
-            <BorderLeft color='#01AC66' />
-            <BetInfo>
-              <CustomText size='12px' color='#868686'>
-                01, 02, 04, 05, 06, 07
-              </CustomText>
-              <CustomText
-                margin='12px 0'
-                style='normal'
-                size='12px'
-                weight='normal'
-                color='#868686'
-              >
-                27/11/2020 - (R$ 2,50)
-              </CustomText>
-              <CustomText size='16px' color='#01AC66'>
-                Mega-Sena
-              </CustomText>
-            </BetInfo>
-          </Bet>
-
-          <Bet>
-            <BorderLeft color='#F79C31' />
-            <BetInfo>
-              <CustomText size='12px' color='#868686'>
-                01, 02, 04, 05, 06, 07, 09, 15, 17, 20, 21, 22, 23, 24, 25
-              </CustomText>
-              <CustomText
-                margin='12px 0'
-                style='normal'
-                size='12px'
-                weight='normal'
-                color='#868686'
-              >
-                27/11/2020 - (R$ 2,50)
-              </CustomText>
-              <CustomText size='16px' color='#F79C31'>
-                Lotomania
-              </CustomText>
-            </BetInfo>
-          </Bet>
-
-          <Bet>
-            <BorderLeft color='#7F3992' />
-            <BetInfo>
-              <CustomText size='12px' color='#868686'>
-                01, 02, 04, 05, 06, 07, 09, 15, 17, 20, 21, 22, 23, 24, 25
-              </CustomText>
-              <CustomText
-                margin='12px 0'
-                style='normal'
-                size='12px'
-                weight='normal'
-                color='#868686'
-              >
-                29/11/2020 - (R$ 2,50)
-              </CustomText>
-              <CustomText size='16px' color='#7F3992'>
-                Lotofácil
-              </CustomText>
-            </BetInfo>
-          </Bet>
-
-          <Bet>
-            <BorderLeft color='#7F3992' />
-            <BetInfo>
-              <CustomText size='12px' color='#868686'>
-                01, 02, 04, 05, 06, 07, 09, 15, 17, 20, 21, 22, 23, 24, 25
-              </CustomText>
-              <CustomText
-                margin='12px 0'
-                style='normal'
-                size='12px'
-                weight='normal'
-                color='#868686'
-              >
-                29/11/2020 - (R$ 2,50)
-              </CustomText>
-              <CustomText size='16px' color='#7F3992'>
-                Lotofácil
-              </CustomText>
-            </BetInfo>
-          </Bet>
-
-          <Bet>
-            <BorderLeft color='#7F3992' />
-            <BetInfo>
-              <CustomText size='12px' color='#868686'>
-                01, 02, 04, 05, 06, 07, 09, 15, 17, 20, 21, 22, 23, 24, 25
-              </CustomText>
-              <CustomText
-                margin='12px 0'
-                style='normal'
-                size='12px'
-                weight='normal'
-                color='#868686'
-              >
-                29/11/2020 - (R$ 2,50)
-              </CustomText>
-              <CustomText size='16px' color='#7F3992'>
-                Lotofácil
-              </CustomText>
-            </BetInfo>
-          </Bet>
         </BetsContainer>
       </Bets>
     </>

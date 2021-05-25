@@ -41,13 +41,19 @@ export default function Button (
         margin={margin}
         width={width}
         bColor={bColor}
+        style={{ flexDirection: 'row', justifyContent: 'center' }}
         {...ButtonProps}
       >
         <TextButton weight={weight} color={color} fontSize={fontSize}>
           {children}
           {label}
           {selected && (
-            <View style={{ paddingBottom: 4 }}>
+            <View
+              style={{
+                paddingBottom: 4,
+                paddingLeft: 1
+              }}
+            >
               <Octicons name='x' size={10} color='#FFF' />
             </View>
           )}
