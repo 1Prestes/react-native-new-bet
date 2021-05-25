@@ -55,11 +55,14 @@ export default function SignIn ({ navigation }: NavigationProps) {
 
   useEffect(() => {}, [session])
 
-  const handleClick = () => {
-    signInValidationSchema
+  const handleClick = async () => {
+    await signInValidationSchema
       .validate(login)
       .then(() => dispatch(setAuth(login)))
-      .catch(err => showMessage('error', err.errors[0]))
+      .catch(err => {
+        if (err.errors[0]) return showMessage('error', err.errors[0])
+        showMessage('error', err)
+      })
   }
 
   return (

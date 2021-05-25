@@ -1,5 +1,5 @@
-import React from 'react'
-import { View, Text } from 'react-native'
+import React, { useState, useEffect } from 'react'
+import moment from 'moment'
 
 import Button from '../../Components/Button'
 import Header from '../../Components/Header'
@@ -13,8 +13,45 @@ import {
   BorderLeft,
   BetInfo
 } from './Home-style'
+import { useAppDispatch, useAppSelector } from '../../store/hooks'
+import { fetchBets, fetchGames } from '../../store/gamesReducer'
+import showMessage from '../../helpers/toasts'
+import { floatToReal } from '../../helpers/floatToReal'
+import { Text } from 'react-native'
+
+interface Bet {
+  id: string
+  game_id: number
+  userId: string
+  betnumbers: string
+  color: string
+  price: number
+  created_at: string
+}
 
 export default function Home () {
+  const games = useAppSelector(state => state.games.games)
+  const error = useAppSelector(state => state.games.error)
+  const cart = useAppSelector(state => state.games.cart)
+  const token = useAppSelector(state => state.session.token)
+  const betCheckout: Bet[] = useAppSelector(state => state.games.checkout)
+  const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    dispatch(fetchGames(token))
+    dispatch(fetchBets(token))
+  }, [])
+
+  useEffect(() => {
+    dispatch(fetchBets(token))
+  }, [cart])
+
+  useEffect(() => {
+    if (error) {
+      showMessage('error', error)
+    }
+  }, [error])
+
   return (
     <>
       <Header />
@@ -27,47 +64,72 @@ export default function Home () {
         </CustomText>
 
         <FilterContainer horizontal={true}>
-          <Button
-            bg='#fff'
-            width='105px'
-            weight='normal'
-            fontSize='14px'
-            bColor='#7F3992'
-            color='#7F3992'
-            margin='0 9px 0 0'
-          >
-            Lotofácil
-          </Button>
-
-          <Button
-            selected={true}
-            bg='#01AC66'
-            width='105px'
-            weight='normal'
-            fontSize='14px'
-            bColor='#01AC66'
-            color='#fff'
-            margin='0 9px 0 0'
-          >
-            Mega-Sena
-          </Button>
-
-          <Button
-            bg='#fff'
-            width='105px'
-            weight='normal'
-            fontSize='14px'
-            bColor='#F79C31'
-            color='#F79C31'
-            margin='0 9px 0 0'
-          >
-            Mega-Sena
-          </Button>
+          {!!games[0].type &&
+            games.map(game => {
+              return (
+                <Button
+                  key={game.id}
+                  bg='#fff'
+                  width='105px'
+                  weight='normal'
+                  fontSize='14px'
+                  bColor={game.color}
+                  color={game.color}
+                  margin='0 9px 0 0'
+                >
+                  {game.type}
+                </Button>
+              )
+            })}
         </FilterContainer>
       </Container>
 
       <Bets>
         <BetsContainer>
+          {betCheckout &&
+            betCheckout.map(bet => {
+              return (
+                <Bet key={bet.id}>
+                  <BorderLeft
+                    color={
+                      games.filter(game => game.id === bet.game_id)[0]?.color
+                    }
+                  />
+                  <BetInfo>
+                    <CustomText size='12px' color='#868686'>
+                      {bet.betnumbers
+                        .split(',')
+                        .map(number => Number(number))
+                        .slice()
+                        .sort((a, b) => a - b)
+                        .map(number => {
+                          return number < 10 ? `0${number}` : number
+                        })
+                        .join(', ')}
+                    </CustomText>
+                    <CustomText
+                      margin='12px 0'
+                      style='normal'
+                      size='12px'
+                      weight='normal'
+                      color='#868686'
+                    >
+                      {moment().format('DD/MM/YYYY')} - (R${' '}
+                      {floatToReal(bet.price)})
+                    </CustomText>
+                    <CustomText
+                      size='16px'
+                      color={
+                        games.filter(game => game.id === bet.game_id)[0]?.color
+                      }
+                    >
+                      {games.filter(game => game.id === bet.game_id)[0]?.type}
+                    </CustomText>
+                  </BetInfo>
+                </Bet>
+              )
+            })}
+
           <Bet>
             <BorderLeft color='#7F3992' />
             <BetInfo>
