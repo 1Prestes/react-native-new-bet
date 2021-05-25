@@ -4,6 +4,7 @@ import api from '../utils/axios-http-client'
 
 const initialState = {
   error: '',
+
   user: {
     username: '',
     email: ''
@@ -45,6 +46,10 @@ const usersSlice = createSlice({
     }
   },
   extraReducers: builder => {
+    builder.addCase(createUser.pending, state => {
+      return { ...state, error: '' }
+    })
+
     builder.addCase(createUser.fulfilled, state => {
       return { ...state, error: '' }
     })
