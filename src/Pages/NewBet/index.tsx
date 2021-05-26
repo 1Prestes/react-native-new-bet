@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { View, Text } from 'react-native'
 import { Octicons } from '@expo/vector-icons'
 import { AntDesign } from '@expo/vector-icons'
+// import jwt from 'jsonwebtoken'
 
 import Button from '../../Components/Button'
 import Header from '../../Components/Header'
@@ -28,12 +29,14 @@ import { numberExists } from '../../helpers/numberExists'
 import { removeNumber } from '../../helpers/removeNumber'
 import { generateGameNumbers } from '../../helpers/generateGameNumbers'
 import { theme } from '../../assets/style/theme'
+import { fetchUser } from '../../store/userReducer'
 
 export default function NewBet () {
   const [gameNumbers, setGameNumbers] = useState<number[]>([])
   const [betNumbers, setBetNumbers] = useState<number[]>([])
   const [loading, setLoading] = useState(false)
 
+  const user = useAppSelector(state => state.user.user)
   const token = useAppSelector(state => state.session.token)
   const games = useAppSelector(state => state.games.games)
   const error = useAppSelector(state => state.games.error)
@@ -42,6 +45,13 @@ export default function NewBet () {
 
   useEffect(() => {
     dispatch(fetchGames(token))
+    dispatch(fetchUser(token)).then(res => {
+      if (!res.payload) {
+        if (error) {
+          showMessage('error', error)
+        }
+      }
+    })
   }, [])
 
   useEffect(() => {
@@ -96,7 +106,7 @@ export default function NewBet () {
   }
 
   const addToCart = () => {
-    const { uid }: any = token
+    const id = user.id
     if (betNumbers.length < currentGame.max_number) {
       const missingNumbers = currentGame.max_number - betNumbers.length
       showMessage(
@@ -106,9 +116,9 @@ export default function NewBet () {
       return
     }
     const bet = {
-      id: btoa(String(Date.now())),
+      id: Date.now(),
       game_id: currentGame.id,
-      userId: uid,
+      userId: id,
       bet: betNumbers,
       kindOfGame: currentGame.type,
       color: currentGame.color,
@@ -196,53 +206,57 @@ export default function NewBet () {
       </View>
 
       {!!betNumbers.length && (
-        <Actions>
-          <Button
-            onPress={completeGame}
-            margin='10px 5px'
-            width='110px'
-            padding='8px 6px'
-            bRadius='4px'
-            bColor={theme.colors.green}
-            fontSize='13px'
-            fontStyle='normal'
-            color={theme.colors.green}
-          >
-            Complete game
-          </Button>
-          <Button
-            onPress={() => clearGame(true)}
-            margin='10px 5px'
-            width='87px'
-            padding='8px 6px'
-            bRadius='4px'
-            bColor={theme.colors.green}
-            fontSize='13px'
-            fontStyle='normal'
-            color={theme.colors.green}
-          >
-            Clear game
-          </Button>
-          <Button
-            margin='10px 5px'
-            width='122px'
-            padding='8px 6px'
-            bRadius='4px'
-            bg={theme.colors.green}
-            bColor={theme.colors.green}
-            fontSize='13px'
-            fontStyle='normal'
-            color='#fff'
-          >
-            <AntDesign
-              style={{ paddingRight: 10 }}
-              name='shoppingcart'
-              size={15}
+        <View style={{ alignItems: 'center', height: 50 }}>
+          <Actions horizontal={true}>
+            <Button
+              onPress={completeGame}
+              margin='10px 5px'
+              width='110px'
+              padding='8px 6px'
+              bRadius='4px'
+              bColor={theme.colors.green}
+              fontSize='13px'
+              fontStyle='normal'
+              color={theme.colors.green}
+            >
+              Complete game
+            </Button>
+
+            <Button
+              onPress={() => clearGame(true)}
+              margin='10px 5px'
+              width='87px'
+              padding='8px 6px'
+              bRadius='4px'
+              bColor={theme.colors.green}
+              fontSize='13px'
+              fontStyle='normal'
+              color={theme.colors.green}
+            >
+              Clear game
+            </Button>
+            <Button
+              onPress={addToCart}
+              margin='10px 5px'
+              width='122px'
+              padding='8px 6px'
+              bRadius='4px'
+              bg={theme.colors.green}
+              bColor={theme.colors.green}
+              fontSize='13px'
+              fontStyle='normal'
               color='#fff'
-            />{' '}
-            Add to cart
-          </Button>
-        </Actions>
+            >
+              <AntDesign
+                style={{ paddingRight: 10 }}
+                name='shoppingcart'
+                size={15}
+                color='#fff'
+              />{' '}
+              Add to cart
+            </Button>
+          </Actions>
+        </View>
       )}
 
       <Numbers>

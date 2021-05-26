@@ -58,8 +58,6 @@ export const NumberSelected = styled.TouchableOpacity`
   height: 40px;
   border-radius: 100px;
 `
-export const Actions = styled.View`
-justify-content: center;
+export const Actions = styled.ScrollView`
   background-color: ${props => props.theme.bg};
-  flex-direction: row;
 `
