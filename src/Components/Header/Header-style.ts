@@ -33,3 +33,15 @@ export const Title = styled.Text`
   text-align: center;
   color: ${props => props.theme.colors.primary_color};
 `
+export const CartContainer = styled.View`
+  flex: 1;
+  background-color: #fff;
+  width: 265px;
+  padding-left: 25px;
+`
+
+export const CloseContainer = styled.View`
+  align-items: flex-end;
+  margin-top: 16px;
+  margin-right: 20px;
+`

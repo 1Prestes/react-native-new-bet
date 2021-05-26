@@ -6,6 +6,7 @@ const initialState = {
   error: '',
 
   user: {
+    id: 0,
     username: '',
     email: ''
   }
@@ -68,8 +69,8 @@ const usersSlice = createSlice({
     })
 
     builder.addCase(fetchUser.fulfilled, (state, action) => {
-      const { username, email } = action.payload
-      return { ...state, user: { username, email }, error: '' }
+      const { id, username, email } = action.payload
+      return { ...state, user: { id, username, email }, error: '' }
     })
 
     builder.addCase(fetchUser.rejected, (state, action) => {
