@@ -26,8 +26,10 @@ export default function Button (
     width,
     weight,
     fontSize,
-    color,
+    fontStyle,
+    lHeight,
     bColor,
+    color,
     selected,
     children
   }: ButtonProps,
@@ -44,7 +46,12 @@ export default function Button (
         style={{ flexDirection: 'row', justifyContent: 'center' }}
         {...ButtonProps}
       >
-        <TextButton weight={weight} color={color} fontSize={fontSize}>
+        <TextButton
+          weight={weight}
+          fontStyle={fontStyle}
+          color={color}
+          fontSize={fontSize}
+        >
           {children}
           {label}
           {selected && (

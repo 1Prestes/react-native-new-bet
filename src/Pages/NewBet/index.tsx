@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { View, Text } from 'react-native'
-import Button from '../../Components/Button'
+import { Octicons } from '@expo/vector-icons'
 
+import Button from '../../Components/Button'
 import Header from '../../Components/Header'
 import CustomText from '../../Components/CustomText'
 import {
@@ -10,7 +11,9 @@ import {
   Numbers,
   NumbersContainer,
   Number,
-  BorderBottom
+  BorderBottom,
+  NumberSelected,
+  NumberSelectedContainer
 } from './NewBet-style'
 import { useAppDispatch, useAppSelector } from '../../store/hooks'
 import {
@@ -153,6 +156,7 @@ export default function NewBet () {
             )
           })}
         </FilterContainer>
+
         <CustomText margin='20px 0 5px 0' size='17px' color='#868686'>
           Fill Your Bet
         </CustomText>
@@ -166,6 +170,24 @@ export default function NewBet () {
         </View>
       </Container>
 
+      {!!betNumbers.length && (
+        <NumberSelectedContainer>
+          {betNumbers.map(number => (
+            <NumberSelected
+              key={number}
+              onPress={() => chooseNumber(number)}
+              style={{ backgroundColor: currentGame.color }}
+            >
+              <View style={{ marginBottom: -4, paddingLeft: 16 }}>
+                <Octicons name='x' size={8} color='#fff' />
+              </View>
+              <Text style={{ fontWeight: 'bold', fontSize: 13, color: '#fff' }}>
+                {number < 10 ? '0' + number : number}
+              </Text>
+            </NumberSelected>
+          ))}
+        </NumberSelectedContainer>
+      )}
       <Numbers>
         <NumbersContainer>
           {currentGame &&

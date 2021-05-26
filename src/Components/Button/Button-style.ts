@@ -2,13 +2,15 @@ import styled from 'styled-components/native'
 
 export interface StyleButtonProps {
   bg?: string
-  fontSize?: string
   width?: string
   align?: string
   margin?: string
   weight?: string
-  color?: string
+  fontSize?: string
+  fontStyle?: string
+  lHeight?: string
   bColor?: string
+  color?: string
 }
 
 export const ButtonContainer = styled.View<StyleButtonProps>`
@@ -29,6 +31,6 @@ export const TextButton = styled.Text<StyleButtonProps>`
   text-align: center;
   font-size: ${props => props.fontSize ?? '30px'};
   font-weight: ${props => props.weight ?? 'bold'};
-  font-style: italic;
+  font-style: ${props => props.fontStyle ?? 'italic'};
   color: ${props => props.color ?? props.theme.colors.primary_color};
 `

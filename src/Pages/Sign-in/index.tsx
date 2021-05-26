@@ -39,7 +39,7 @@ const signInValidationSchema = yup.object().shape({
 export default function SignIn ({ navigation }: NavigationProps) {
   const dispatch = useDispatch()
   const session = useAppSelector(state => state.session)
-  const [login, setLogin] = useState({ email: '', password: '' })
+  const [login, setLogin] = useState({ email: 'mario@gmail.com', password: '123123' })
   const loading = useAppSelector(state => state.session.loading)
 
   useEffect(() => {

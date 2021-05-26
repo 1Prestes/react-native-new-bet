@@ -25,6 +25,7 @@ export const BorderBottom = styled.View`
 
 export const Numbers = styled.ScrollView`
   flex: 1;
+  background-color: ${props => props.theme.bg};
 `
 
 export const NumbersContainer = styled.View`
@@ -41,4 +42,19 @@ export const Number = styled.TouchableOpacity<NumberProps>`
   border-radius: 100px;
   justify-content: center;
   align-items: center;
+`
+export const NumberSelectedContainer = styled.View`
+  margin: 14px 10px;
+  flex-direction: row;
+  flex-wrap: wrap;
+  background-color: ${props => props.theme.bg};
+`
+
+export const NumberSelected = styled.TouchableOpacity`
+  justify-content: center;
+  align-items: center;
+  margin: 5px;
+  width: 40px;
+  height: 40px;
+  border-radius: 100px;
 `
