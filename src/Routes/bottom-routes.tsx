@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import * as SecureStore from 'expo-secure-store'
 
 import { useAppSelector } from '../store/hooks'
 import Home from '../Pages/Home'

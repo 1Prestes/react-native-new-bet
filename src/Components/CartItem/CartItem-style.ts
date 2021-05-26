@@ -24,4 +24,13 @@ export const BorderLeft = styled.View<BorderProps>`
   border-color: ${props => props.color};
 `
 
-export const BetInfo = styled.View``
+export const BetInfo = styled.View`
+  width: 196px;
+`
+
+export const BetInfoContainer = styled.View`
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+`

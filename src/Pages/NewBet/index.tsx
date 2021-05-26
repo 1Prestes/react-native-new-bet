@@ -30,8 +30,9 @@ import { removeNumber } from '../../helpers/removeNumber'
 import { generateGameNumbers } from '../../helpers/generateGameNumbers'
 import { theme } from '../../assets/style/theme'
 import { fetchUser } from '../../store/userReducer'
+import { NavigationProps } from '../../Routes/stack-routes'
 
-export default function NewBet () {
+export default function NewBet ({ navigation }: NavigationProps) {
   const [gameNumbers, setGameNumbers] = useState<number[]>([])
   const [betNumbers, setBetNumbers] = useState<number[]>([])
   const [loading, setLoading] = useState(false)
@@ -132,7 +133,7 @@ export default function NewBet () {
 
   return (
     <>
-      <Header showCart={true} />
+      <Header navigation={navigation} />
       <Container>
         <CustomText transform='uppercase' margin='26px 0 15px 0' size='22px'>
           New bet for {currentGame?.type}

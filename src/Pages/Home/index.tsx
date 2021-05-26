@@ -17,6 +17,7 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks'
 import { fetchBets, fetchGames } from '../../store/gamesReducer'
 import showMessage from '../../helpers/toasts'
 import { floatToReal } from '../../helpers/floatToReal'
+import { NavigationProps } from '../../Routes/stack-routes'
 
 interface Bet {
   id: string
@@ -28,7 +29,7 @@ interface Bet {
   created_at: string
 }
 
-export default function Home () {
+export default function Home ({ navigation }: NavigationProps) {
   const games = useAppSelector(state => state.games.games)
   const error = useAppSelector(state => state.games.error)
   const cart = useAppSelector(state => state.games.cart)
@@ -110,7 +111,7 @@ export default function Home () {
 
   return (
     <>
-      <Header />
+      <Header navigation={navigation} />
       <Container>
         <CustomText margin='26px 0 15px 0' size='22px'>
           Recent games
