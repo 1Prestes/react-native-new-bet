@@ -5,10 +5,11 @@ export interface StyleButtonProps {
   width?: string
   align?: string
   margin?: string
+  padding?: string
   weight?: string
   fontSize?: string
   fontStyle?: string
-  lHeight?: string
+  bRadius?: string
   bColor?: string
   color?: string
 }
@@ -20,14 +21,14 @@ export const ButtonContainer = styled.View<StyleButtonProps>`
 
 export const TouchableOpacityButton = styled.TouchableOpacity<StyleButtonProps>`
   background-color: ${props => props.bg ?? 'transparent'};
-  border-radius: 100px;
+  border-radius: ${props => props.bRadius ?? '100px'};
   border-width: 2px;
   border-color: ${props => props.bColor ?? 'transparent'};
   margin: ${props => props.margin ?? 'auto'};
   width: ${props => props.width ?? '160px'};
 `
 export const TextButton = styled.Text<StyleButtonProps>`
-  padding: 10px;
+  padding: ${props => props.padding ?? '10px'};
   text-align: center;
   font-size: ${props => props.fontSize ?? '30px'};
   font-weight: ${props => props.weight ?? 'bold'};

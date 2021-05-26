@@ -24,10 +24,11 @@ export default function Button (
     margin,
     align,
     width,
+    padding,
     weight,
     fontSize,
     fontStyle,
-    lHeight,
+    bRadius,
     bColor,
     color,
     selected,
@@ -42,15 +43,17 @@ export default function Button (
         bg={bg}
         margin={margin}
         width={width}
+        bRadius={bRadius}
         bColor={bColor}
         style={{ flexDirection: 'row', justifyContent: 'center' }}
         {...ButtonProps}
       >
         <TextButton
           weight={weight}
+          padding={padding}
           fontStyle={fontStyle}
-          color={color}
           fontSize={fontSize}
+          color={color}
         >
           {children}
           {label}
