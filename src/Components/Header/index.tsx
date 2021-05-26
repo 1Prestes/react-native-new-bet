@@ -2,6 +2,7 @@ import React from 'react'
 import { StatusBar } from 'expo-status-bar'
 import { View, Text } from 'react-native'
 import { Feather } from '@expo/vector-icons'
+import { AntDesign } from '@expo/vector-icons'
 
 import {
   HeaderContainer,
@@ -13,8 +14,13 @@ import { useAppDispatch } from '../../store/hooks'
 import { LOGOUT_USER } from '../../store/sessionReducer'
 import { CLEAR_DATA } from '../../store/gamesReducer'
 import { CLEAR_USER_ERROR } from '../../store/userReducer'
+import { theme } from '../../assets/style/theme'
 
-export default function Header () {
+interface HeaderProps {
+  showCart?: boolean
+}
+
+export default function Header ({ showCart }: HeaderProps) {
   const dispatch = useAppDispatch()
 
   const logout = () => {
@@ -31,7 +37,17 @@ export default function Header () {
         <BorderBottom />
       </LogoContainer>
 
-      <Feather onPress={logout} name='log-out' size={26} color='#C1C1C1' />
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        {showCart && (
+          <AntDesign
+            style={{ marginRight: 31 }}
+            name='shoppingcart'
+            size={26}
+            color={theme.colors.green}
+          />
+        )}
+        <Feather onPress={logout} name='log-out' size={26} color='#C1C1C1' />
+      </View>
     </HeaderContainer>
   )
 }

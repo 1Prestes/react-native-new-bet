@@ -122,7 +122,7 @@ export default function NewBet () {
 
   return (
     <>
-      <Header />
+      <Header showCart={true} />
       <Container>
         <CustomText transform='uppercase' margin='26px 0 15px 0' size='22px'>
           New bet for {currentGame?.type}
