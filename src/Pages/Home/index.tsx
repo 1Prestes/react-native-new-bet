@@ -120,7 +120,10 @@ export default function Home ({ navigation }: NavigationProps) {
           Filters
         </CustomText>
 
-        <FilterContainer horizontal={true}>
+        <FilterContainer
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+        >
           {!!games[0].type &&
             games.map(game => {
               let color = game.color
@@ -153,7 +156,7 @@ export default function Home ({ navigation }: NavigationProps) {
       </Container>
 
       <Bets>
-        <BetsContainer>
+        <BetsContainer showsVerticalScrollIndicator={false}>
           {betCheckout &&
             betCheckout.map(bet => {
               const exists = selectedGames.includes(bet.game_id)

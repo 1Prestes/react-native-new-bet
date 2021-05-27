@@ -142,7 +142,10 @@ export default function NewBet ({ navigation }: NavigationProps) {
           Choose a game
         </CustomText>
 
-        <FilterContainer horizontal={true}>
+        <FilterContainer
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+        >
           {games?.map(game => {
             let { color, type } = game
             let backgroundColor = 'transparent'
@@ -260,7 +263,7 @@ export default function NewBet ({ navigation }: NavigationProps) {
         </View>
       )}
 
-      <Numbers>
+      <Numbers showsVerticalScrollIndicator={false}>
         <View style={{ alignItems: 'center' }}>
           <BorderBottom />
         </View>
