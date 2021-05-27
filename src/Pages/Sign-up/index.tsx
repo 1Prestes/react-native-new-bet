@@ -63,9 +63,6 @@ export default function SignUp ({ navigation }: NavigationProps) {
           const { email, password } = res
           dispatch(setAuth({ email, password })).then(res => {
             if (res.payload) {
-              // return setTimeout(() => {
-              //   navigation.navigate()
-              // }, 2000)
             }
 
             dispatch(CLEAR_USER_ERROR())

@@ -12,6 +12,7 @@ import {
 import SignIn from '../Pages/Sign-in'
 import SignUp from '../Pages/Sign-up'
 import ForgotPassword from '../Pages/ForgotPassword'
+import Account from '../Pages/Account'
 const Tab = createBottomTabNavigator()
 
 function BottomRoutes () {
@@ -72,8 +73,8 @@ function BottomRoutes () {
             }}
           />
           <Tab.Screen
-            name='HomeTest'
-            component={NewBet}
+            name='Account'
+            component={Account}
             options={{
               tabBarIcon: ({ focused }) => <NavItemAccount focused={focused} />
             }}
