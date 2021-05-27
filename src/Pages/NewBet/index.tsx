@@ -16,7 +16,8 @@ import {
   BorderBottom,
   NumberSelected,
   NumberSelectedContainer,
-  Actions
+  Actions,
+  BorderBottomContainer
 } from './NewBet-style'
 import { useAppDispatch, useAppSelector } from '../../store/hooks'
 import {
@@ -30,7 +31,7 @@ import { removeNumber } from '../../helpers/removeNumber'
 import { generateGameNumbers } from '../../helpers/generateGameNumbers'
 import { theme } from '../../assets/style/theme'
 import { fetchUser } from '../../store/userReducer'
-import { NavigationProps } from '../../Routes/stack-routes'
+import { NavigationProps } from '../../Routes/routes'
 
 export default function NewBet ({ navigation }: NavigationProps) {
   const [gameNumbers, setGameNumbers] = useState<number[]>([])
@@ -263,10 +264,10 @@ export default function NewBet ({ navigation }: NavigationProps) {
         </View>
       )}
 
+      <BorderBottomContainer>
+        <BorderBottom />
+      </BorderBottomContainer>
       <Numbers showsVerticalScrollIndicator={false}>
-        <View style={{ alignItems: 'center' }}>
-          <BorderBottom />
-        </View>
         <NumbersContainer>
           {currentGame &&
             gameNumbers.map(number => {

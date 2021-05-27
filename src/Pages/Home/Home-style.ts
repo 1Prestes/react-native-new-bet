@@ -5,7 +5,6 @@ interface BorderProps {
 }
 
 export const Container = styled.View`
-  background-color: ${props => props.theme.bg};
   padding: 0 20px;
 `
 
@@ -16,13 +15,10 @@ export const FilterContainer = styled.ScrollView`
 `
 
 export const Bets = styled.View`
-  flex: 1;
-  padding: 0 20px;
+  padding: 10px 20px 50px 20px;
+  padding-bottom: 50px;
 `
 
-export const BetsContainer = styled.ScrollView`
-  padding-top: 16px;
-`
 export const Bet = styled.View`
   flex-direction: row;
   margin: 14px 0;

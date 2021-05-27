@@ -15,6 +15,13 @@ export const FilterContainer = styled.ScrollView`
   margin-top: 15px;
 `
 
+export const BorderBottomContainer = styled.View`
+  background-color: ${props => props.theme.bg};
+  align-items: center;
+  padding-top: 10px;
+  padding-bottom: 8px;
+`
+
 export const BorderBottom = styled.View`
   margin-top: 3px;
   width: 36px;

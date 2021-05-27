@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import moment from 'moment'
+import { ScrollView, View } from 'react-native'
 
 import Button from '../../Components/Button'
 import Header from '../../Components/Header'
@@ -8,7 +9,6 @@ import {
   Container,
   FilterContainer,
   Bets,
-  BetsContainer,
   Bet,
   BorderLeft,
   BetInfo
@@ -17,7 +17,7 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks'
 import { fetchBets, fetchGames } from '../../store/gamesReducer'
 import showMessage from '../../helpers/toasts'
 import { floatToReal } from '../../helpers/floatToReal'
-import { NavigationProps } from '../../Routes/stack-routes'
+import { NavigationProps } from '../../Routes/routes'
 
 interface Bet {
   id: string
@@ -119,7 +119,8 @@ export default function Home ({ navigation }: NavigationProps) {
         <CustomText weight='normal' size='22px'>
           Filters
         </CustomText>
-
+      </Container>
+      <View style={{ alignItems: 'center' }}>
         <FilterContainer
           horizontal={true}
           showsHorizontalScrollIndicator={false}
@@ -153,10 +154,10 @@ export default function Home ({ navigation }: NavigationProps) {
               )
             })}
         </FilterContainer>
-      </Container>
+      </View>
 
       <Bets>
-        <BetsContainer showsVerticalScrollIndicator={false}>
+        <ScrollView showsVerticalScrollIndicator={false}>
           {betCheckout &&
             betCheckout.map(bet => {
               const exists = selectedGames.includes(bet.game_id)
@@ -176,7 +177,7 @@ export default function Home ({ navigation }: NavigationProps) {
                 )
               }
             })}
-        </BetsContainer>
+        </ScrollView>
       </Bets>
     </>
   )

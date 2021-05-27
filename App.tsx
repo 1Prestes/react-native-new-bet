@@ -7,14 +7,14 @@ import Toast from 'react-native-toast-message'
 
 import { store } from './src/store/store'
 import { theme } from './src/assets/style/theme'
-import BottomRoutes from './src/Routes/bottom-routes'
+import Routes from './src/Routes/routes'
 
 export default function App () {
   return (
     <Provider store={store}>
       <ThemeProvider theme={theme}>
         <NavigationContainer>
-          <BottomRoutes />
+          <Routes />
         </NavigationContainer>
       </ThemeProvider>
       <Toast ref={ref => Toast.setRef(ref)} />

@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from 'react'
 import { StatusBar } from 'expo-status-bar'
 import {
+  ScrollView,
   View,
   Text,
   KeyboardAvoidingView,
-  ActivityIndicator
+  ActivityIndicator,
+  Platform
 } from 'react-native'
 import { AntDesign } from '@expo/vector-icons'
 import * as yup from 'yup'
 
-import CustomText from '../../Components/CustomText'
 import Header from '../../Components/Header'
-import { NavigationProps } from '../../Routes/stack-routes'
+import { NavigationProps } from '../../Routes/routes'
 import { useAppDispatch, useAppSelector } from '../../store/hooks'
 import { fetchUser, updateUser } from '../../store/userReducer'
 import showMessage from '../../helpers/toasts'
@@ -121,71 +122,80 @@ export default function Account ({ navigation }: NavigationProps) {
     <>
       <Header navigation={navigation} />
       <StatusBar style='auto' translucent={true} />
-      <Container>
-        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-          {!loading && (
-            <FormContainer>
-              <Title style={{ fontSize: 34 }}>
-                Hello {userUpdate.username}
-              </Title>
-              <InputContainer>
-                <Input
-                  onChangeText={(value: string) =>
-                    handleChange(value, 'username')
-                  }
-                  value={userUpdate.username}
-                  placeholder='Name'
-                />
-                <Input
-                  onChangeText={(value: string) => handleChange(value, 'email')}
-                  autoCapitalize='none'
-                  value={userUpdate.email}
-                  placeholder='Email'
-                />
-                <Input
-                  onChangeText={(value: string) =>
-                    handleChange(value, 'password')
-                  }
-                  secureTextEntry
-                  autoCapitalize='none'
-                  value={userUpdate.password}
-                  placeholder='Password'
-                />
-
-                <Input
-                  onChangeText={(value: string) =>
-                    handleChange(value, 'password_confirmation')
-                  }
-                  secureTextEntry
-                  autoCapitalize='none'
-                  value={userUpdate.password_confirmation}
-                  placeholder='Password confirmation'
-                />
-
-                <Button
-                  onPress={handleClick}
-                  margin='21px'
-                  fontSize='30px'
-                  width='180px'
-                  color={theme.colors.green}
-                >
-                  <Text>
-                    Update{' '}
-                    <AntDesign
-                      name='arrowright'
-                      size={30}
-                      color={theme.colors.green}
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'position'}
+      >
+        <View>
+          <ScrollView
+            keyboardShouldPersistTaps='never'
+            showsVerticalScrollIndicator={false}
+          >
+            <Container>
+              {!loading && (
+                <FormContainer>
+                  <Title>Hello {user.username}</Title>
+                  <InputContainer>
+                    <Input
+                      onChangeText={(value: string) =>
+                        handleChange(value, 'username')
+                      }
+                      value={userUpdate.username}
+                      placeholder='Name'
                     />
-                  </Text>
-                </Button>
-              </InputContainer>
-            </FormContainer>
-          )}
-          {loading && (
-            <ActivityIndicator size={110} color={theme.colors.green} />
-          )}
+                    <Input
+                      onChangeText={(value: string) =>
+                        handleChange(value, 'email')
+                      }
+                      autoCapitalize='none'
+                      value={userUpdate.email}
+                      placeholder='Email'
+                    />
+                    <Input
+                      onChangeText={(value: string) =>
+                        handleChange(value, 'password')
+                      }
+                      secureTextEntry
+                      autoCapitalize='none'
+                      value={userUpdate.password}
+                      placeholder='Password'
+                    />
+
+                    <Input
+                      onChangeText={(value: string) =>
+                        handleChange(value, 'password_confirmation')
+                      }
+                      secureTextEntry
+                      autoCapitalize='none'
+                      value={userUpdate.password_confirmation}
+                      placeholder='Password confirmation'
+                    />
+
+                    <Button
+                      onPress={handleClick}
+                      margin='21px'
+                      fontSize='30px'
+                      width='180px'
+                      color={theme.colors.green}
+                    >
+                      <Text>
+                        Update{' '}
+                        <AntDesign
+                          name='arrowright'
+                          size={30}
+                          color={theme.colors.green}
+                        />
+                      </Text>
+                    </Button>
+                  </InputContainer>
+                </FormContainer>
+              )}
+              {loading && (
+                <ActivityIndicator size={110} color={theme.colors.green} />
+              )}
+            </Container>
+          </ScrollView>
         </View>
-      </Container>
+      </KeyboardAvoidingView>
     </>
   )
 }

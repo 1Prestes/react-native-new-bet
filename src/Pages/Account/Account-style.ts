@@ -1,13 +1,12 @@
 import styled from 'styled-components/native'
 
-export const Container = styled.ScrollView`
-  background-color: ${props => props.theme.bg};
-  /* align-items: center; */
-  /* justify-content: center; */
+export const Container = styled.View`
+  justify-content: center;
+  align-items: center;
 `
 
 export const Title = styled.Text`
-  font-size: 44px;
+  font-size: 34px;
   font-weight: bold;
   font-style: italic;
   text-align: center;

@@ -13,9 +13,26 @@ import SignIn from '../Pages/Sign-in'
 import SignUp from '../Pages/Sign-up'
 import ForgotPassword from '../Pages/ForgotPassword'
 import Account from '../Pages/Account'
-const Tab = createBottomTabNavigator()
+import { StackNavigationProp } from '@react-navigation/stack'
 
-function BottomRoutes () {
+type RootStackParamList = {
+  SignIn: undefined
+  SignUp: undefined
+  ForgotPassword: undefined
+  Home: undefined
+  NewBet: undefined
+  Account: undefined
+}
+
+type ProfileScreenNavigationProp = StackNavigationProp<RootStackParamList>
+
+export type NavigationProps = {
+  navigation: ProfileScreenNavigationProp
+}
+
+const Tab = createBottomTabNavigator<RootStackParamList>()
+
+function Routes () {
   const token = useAppSelector(state => state.session.token)
 
   return (
@@ -85,4 +102,4 @@ function BottomRoutes () {
   )
 }
 
-export default BottomRoutes
+export default Routes

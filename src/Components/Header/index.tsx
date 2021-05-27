@@ -1,11 +1,9 @@
 import React, { useState } from 'react'
-import { useRoute } from '@react-navigation/native'
-import { StyleSheet, Text, TouchableHighlight, View } from 'react-native'
-import Modal from 'react-native-modal'
 import { StatusBar } from 'expo-status-bar'
-import { Feather } from '@expo/vector-icons'
-import { AntDesign } from '@expo/vector-icons'
-import { Octicons } from '@expo/vector-icons'
+import { View } from 'react-native'
+import Modal from 'react-native-modal'
+import { useRoute } from '@react-navigation/native'
+import { Feather, AntDesign, Octicons } from '@expo/vector-icons'
 
 import {
   HeaderContainer,
@@ -21,12 +19,6 @@ import {
 } from './Header-style'
 import { useAppDispatch, useAppSelector } from '../../store/hooks'
 import { LOGOUT_USER } from '../../store/sessionReducer'
-import {
-  checkoutGames,
-  CLEAR_CART,
-  CLEAR_DATA,
-  ICartItem
-} from '../../store/gamesReducer'
 import { CLEAR_USER_ERROR } from '../../store/userReducer'
 import { theme } from '../../assets/style/theme'
 import CustomText from '../CustomText'
@@ -34,7 +26,13 @@ import CartItem from '../CartItem'
 import Button from '../Button'
 import { floatToReal } from '../../helpers/floatToReal'
 import showMessage from '../../helpers/toasts'
-import { NavigationProps } from '../../Routes/stack-routes'
+import { NavigationProps } from '../../Routes/routes'
+import {
+  checkoutGames,
+  CLEAR_CART,
+  CLEAR_DATA,
+  ICartItem
+} from '../../store/gamesReducer'
 
 export interface CartItemProps {
   id: number
@@ -113,7 +111,7 @@ export default function Header ({ navigation }: NavigationProps) {
 
   return (
     <>
-      <HeaderContainer>
+      <HeaderContainer style={{ elevation: 5 }}>
         <StatusBar style='auto' translucent={true} />
         <LogoContainer>
           <Title>TGL</Title>
