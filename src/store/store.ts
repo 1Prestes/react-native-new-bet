@@ -4,13 +4,15 @@ import userReducer from './userReducer'
 import gamesReducer from './gamesReducer'
 import sessionReducer from './sessionReducer'
 import recoverReducer from './recoverPassword'
+import cartReducer from './cartReducer'
 
 export const store = configureStore({
   reducer: {
     user: userReducer,
     games: gamesReducer,
     session: sessionReducer,
-    password: recoverReducer
+    password: recoverReducer,
+    cartStatus: cartReducer
   }
 })
 
