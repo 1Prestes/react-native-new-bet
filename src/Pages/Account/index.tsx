@@ -6,7 +6,6 @@ import {
   Text,
   TouchableOpacity,
   KeyboardAvoidingView,
-  ActivityIndicator,
   Platform
 } from 'react-native'
 import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons'
@@ -46,7 +45,6 @@ const schema = yup.object().shape({
 })
 
 export default function Account ({ navigation }: NavigationProps) {
-  const [loading, setLoading] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
   const [showPasswordConfirmation, setShowPasswordConfirmation] = useState(
     false
@@ -112,17 +110,6 @@ export default function Account ({ navigation }: NavigationProps) {
     setUserUpdate({ ...userUpdate, [key]: value })
   }
 
-  const reconnect = (): void => {
-    setLoading(true)
-    dispatch(fetchUser(token)).then(res => {
-      setTimeout(() => {
-        if (!res.payload) {
-          return setLoading(false)
-        }
-      }, 1000)
-    })
-  }
-
   return (
     <>
       <Header navigation={navigation} />
@@ -136,103 +123,98 @@ export default function Account ({ navigation }: NavigationProps) {
             showsVerticalScrollIndicator={false}
           >
             <Container>
-              {!loading && (
-                <FormContainer>
-                  <Title>Hello {user.username}</Title>
-                  <InputContainer>
-                    <Input
-                      onChangeText={(value: string) =>
-                        handleChange(value, 'username')
-                      }
-                      value={userUpdate.username}
-                      placeholder='Name'
-                    />
-                    <Input
-                      onChangeText={(value: string) =>
-                        handleChange(value, 'email')
-                      }
-                      autoCapitalize='none'
-                      value={userUpdate.email}
-                      placeholder='Email'
-                    />
-                    <Input
-                      onChangeText={(value: string) =>
-                        handleChange(value, 'password')
-                      }
-                      secureTextEntry={!showPassword}
-                      autoCapitalize='none'
-                      value={userUpdate.password}
-                      placeholder='Password'
-                    />
+              <FormContainer>
+                <Title>Hello {user.username}</Title>
+                <InputContainer>
+                  <Input
+                    onChangeText={(value: string) =>
+                      handleChange(value, 'username')
+                    }
+                    value={userUpdate.username}
+                    placeholder='Name'
+                  />
+                  <Input
+                    onChangeText={(value: string) =>
+                      handleChange(value, 'email')
+                    }
+                    autoCapitalize='none'
+                    value={userUpdate.email}
+                    placeholder='Email'
+                  />
+                  <Input
+                    onChangeText={(value: string) =>
+                      handleChange(value, 'password')
+                    }
+                    secureTextEntry={!showPassword}
+                    autoCapitalize='none'
+                    value={userUpdate.password}
+                    placeholder='Password'
+                  />
 
-                    <TouchableOpacity
-                      style={{
-                        position: 'absolute',
-                        right: 25,
-                        top: 162
-                      }}
-                    >
-                      <MaterialCommunityIcons
-                        onPress={() => setShowPassword(!showPassword)}
-                        name={showPassword ? 'eye-outline' : 'eye-off-outline'}
-                        size={24}
-                        color='#C1C1C1'
+                  <TouchableOpacity
+                    style={{
+                      position: 'absolute',
+                      right: 25,
+                      top: 162
+                    }}
+                  >
+                    <MaterialCommunityIcons
+                      onPress={() => setShowPassword(!showPassword)}
+                      name={showPassword ? 'eye-outline' : 'eye-off-outline'}
+                      size={24}
+                      color='#C1C1C1'
+                    />
+                  </TouchableOpacity>
+
+                  <Input
+                    onChangeText={(value: string) =>
+                      handleChange(value, 'password_confirmation')
+                    }
+                    secureTextEntry={!showPasswordConfirmation}
+                    autoCapitalize='none'
+                    value={userUpdate.password_confirmation}
+                    placeholder='Password confirmation'
+                  />
+
+                  <TouchableOpacity
+                    style={{
+                      position: 'absolute',
+                      right: 25,
+                      top: 232
+                    }}
+                  >
+                    <MaterialCommunityIcons
+                      onPress={() =>
+                        setShowPasswordConfirmation(!showPasswordConfirmation)
+                      }
+                      name={
+                        showPasswordConfirmation
+                          ? 'eye-outline'
+                          : 'eye-off-outline'
+                      }
+                      size={24}
+                      color='#C1C1C1'
+                    />
+                  </TouchableOpacity>
+
+                  <Button
+                    onPress={handleClick}
+                    margin='21px'
+                    fontSize='30px'
+                    width='180px'
+                    color={theme.colors.green}
+                  >
+                    <Text>
+                      Update{' '}
+                      <AntDesign
+                        name='arrowright'
+                        size={30}
+                        color={theme.colors.green}
                       />
-                    </TouchableOpacity>
-
-                    <Input
-                      onChangeText={(value: string) =>
-                        handleChange(value, 'password_confirmation')
-                      }
-                      secureTextEntry={!showPasswordConfirmation}
-                      autoCapitalize='none'
-                      value={userUpdate.password_confirmation}
-                      placeholder='Password confirmation'
-                    />
-
-                    <TouchableOpacity
-                      style={{
-                        position: 'absolute',
-                        right: 25,
-                        top: 232
-                      }}
-                    >
-                      <MaterialCommunityIcons
-                        onPress={() =>
-                          setShowPasswordConfirmation(!showPasswordConfirmation)
-                        }
-                        name={
-                          showPasswordConfirmation
-                            ? 'eye-outline'
-                            : 'eye-off-outline'
-                        }
-                        size={24}
-                        color='#C1C1C1'
-                      />
-                    </TouchableOpacity>
-
-                    <Button
-                      onPress={handleClick}
-                      margin='21px'
-                      fontSize='30px'
-                      width='180px'
-                      color={theme.colors.green}
-                    >
-                      <Text>
-                        Update{' '}
-                        <AntDesign
-                          name='arrowright'
-                          size={30}
-                          color={theme.colors.green}
-                        />
-                      </Text>
-                    </Button>
-                  </InputContainer>
-                </FormContainer>
-              )}
-              {loading && (
-                <ActivityIndicator size={110} color={theme.colors.green} />
-              )}
+                    </Text>
+                  </Button>
+                </InputContainer>
+              </FormContainer>
             </Container>
           </ScrollView>
         </View>

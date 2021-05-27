@@ -156,6 +156,13 @@ export default function Home ({ navigation }: NavigationProps) {
         </FilterContainer>
       </View>
 
+      {games[0].type !== '' && betCheckout.length === 0 && (
+        <CustomText margin='26px 20px' size='22px'>
+          Opsy! It seems that you still don't have any bet done. Why don't you
+          go to the bet page and start it right now?
+        </CustomText>
+      )}
+
       <Bets>
         <ScrollView showsVerticalScrollIndicator={false}>
           {betCheckout &&

@@ -15,6 +15,7 @@ export const FilterContainer = styled.ScrollView`
 `
 
 export const Bets = styled.View`
+  height: 70%;
   padding: 10px 20px 50px 20px;
   padding-bottom: 50px;
 `

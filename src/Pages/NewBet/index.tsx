@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { View, Text } from 'react-native'
 import { Octicons } from '@expo/vector-icons'
 import { AntDesign } from '@expo/vector-icons'
-// import jwt from 'jsonwebtoken'
 
 import Button from '../../Components/Button'
 import Header from '../../Components/Header'
@@ -36,7 +35,6 @@ import { NavigationProps } from '../../Routes/routes'
 export default function NewBet ({ navigation }: NavigationProps) {
   const [gameNumbers, setGameNumbers] = useState<number[]>([])
   const [betNumbers, setBetNumbers] = useState<number[]>([])
-  const [loading, setLoading] = useState(false)
 
   const user = useAppSelector(state => state.user.user)
   const token = useAppSelector(state => state.session.token)

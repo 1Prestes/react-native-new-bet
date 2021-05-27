@@ -15,7 +15,7 @@ import {
 import Input from '../../Components/Input'
 import { theme } from '../../assets/style/theme'
 import Button from '../../Components/Button'
-import { NavigationProps } from '../../Routes/stack-routes'
+import { NavigationProps } from '../../Routes/routes'
 import { useAppDispatch, useAppSelector } from '../../store/hooks'
 import showMessage from '../../helpers/toasts'
 import { forgotPassword } from '../../store/recoverPassword'
