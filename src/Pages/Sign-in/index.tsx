@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { StatusBar } from 'expo-status-bar'
-import { KeyboardAvoidingView, ActivityIndicator } from 'react-native'
-import { AntDesign } from '@expo/vector-icons'
+import {
+  KeyboardAvoidingView,
+  ActivityIndicator,
+  TouchableOpacity
+} from 'react-native'
+import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons'
 import * as yup from 'yup'
 
 import {
@@ -15,15 +19,10 @@ import {
 import Input from '../../Components/Input'
 import { theme } from '../../assets/style/theme'
 import Button from '../../Components/Button'
-import { NavigationProps } from '../../Routes/stack-routes'
-import { useDispatch, useSelector } from 'react-redux'
-import {
-  CLEAR_SESSION,
-  getCurrentToken,
-  setAuth
-} from '../../store/sessionReducer'
+import { NavigationProps } from '../../Routes/routes'
+import { CLEAR_SESSION, setAuth } from '../../store/sessionReducer'
 import showMessage from '../../helpers/toasts'
-import { useAppSelector } from '../../store/hooks'
+import { useAppDispatch, useAppSelector } from '../../store/hooks'
 
 const signInValidationSchema = yup.object().shape({
   password: yup
@@ -37,9 +36,10 @@ const signInValidationSchema = yup.object().shape({
 })
 
 export default function SignIn ({ navigation }: NavigationProps) {
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const session = useAppSelector(state => state.session)
-  const [login, setLogin] = useState({ email: 'mario@gmail.com', password: '123123' })
+  const [login, setLogin] = useState({ email: '', password: '' })
+  const [showPassword, setShowPassword] = useState(false)
   const loading = useAppSelector(state => state.session.loading)
 
   useEffect(() => {
@@ -84,15 +84,31 @@ export default function SignIn ({ navigation }: NavigationProps) {
                 autoCapitalize='none'
                 placeholder='Email'
               />
+
               <Input
                 onChangeText={(value: string) =>
                   handleChange(value, 'password')
                 }
                 value={login.password}
-                secureTextEntry
+                secureTextEntry={!showPassword}
                 autoCapitalize='none'
                 placeholder='Password'
               />
+
+              <TouchableOpacity
+                style={{
+                  position: 'absolute',
+                  right: 25,
+                  top: 92
+                }}
+              >
+                <MaterialCommunityIcons
+                  onPress={() => setShowPassword(!showPassword)}
+                  name={showPassword ? 'eye-outline' : 'eye-off-outline'}
+                  size={24}
+                  color='#C1C1C1'
+                />
+              </TouchableOpacity>
 
               <Button
                 onPress={() => navigation.navigate('ForgotPassword')}

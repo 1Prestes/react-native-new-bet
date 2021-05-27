@@ -4,11 +4,12 @@ import {
   ScrollView,
   View,
   Text,
+  TouchableOpacity,
   KeyboardAvoidingView,
   ActivityIndicator,
   Platform
 } from 'react-native'
-import { AntDesign } from '@expo/vector-icons'
+import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons'
 import * as yup from 'yup'
 
 import Header from '../../Components/Header'
@@ -46,6 +47,10 @@ const schema = yup.object().shape({
 
 export default function Account ({ navigation }: NavigationProps) {
   const [loading, setLoading] = useState(false)
+  const [showPassword, setShowPassword] = useState(false)
+  const [showPasswordConfirmation, setShowPasswordConfirmation] = useState(
+    false
+  )
 
   const [userUpdate, setUserUpdate] = useState({
     username: '',
@@ -127,7 +132,7 @@ export default function Account ({ navigation }: NavigationProps) {
       >
         <View>
           <ScrollView
-            keyboardShouldPersistTaps='never'
+            keyboardShouldPersistTaps='always'
             showsVerticalScrollIndicator={false}
           >
             <Container>
@@ -154,21 +159,57 @@ export default function Account ({ navigation }: NavigationProps) {
                       onChangeText={(value: string) =>
                         handleChange(value, 'password')
                       }
-                      secureTextEntry
+                      secureTextEntry={!showPassword}
                       autoCapitalize='none'
                       value={userUpdate.password}
                       placeholder='Password'
                     />
 
+                    <TouchableOpacity
+                      style={{
+                        position: 'absolute',
+                        right: 25,
+                        top: 162
+                      }}
+                    >
+                      <MaterialCommunityIcons
+                        onPress={() => setShowPassword(!showPassword)}
+                        name={showPassword ? 'eye-outline' : 'eye-off-outline'}
+                        size={24}
+                        color='#C1C1C1'
+                      />
+                    </TouchableOpacity>
+
                     <Input
                       onChangeText={(value: string) =>
                         handleChange(value, 'password_confirmation')
                       }
-                      secureTextEntry
+                      secureTextEntry={!showPasswordConfirmation}
                       autoCapitalize='none'
                       value={userUpdate.password_confirmation}
                       placeholder='Password confirmation'
                     />
+
+                    <TouchableOpacity
+                      style={{
+                        position: 'absolute',
+                        right: 25,
+                        top: 232
+                      }}
+                    >
+                      <MaterialCommunityIcons
+                        onPress={() =>
+                          setShowPasswordConfirmation(!showPasswordConfirmation)
+                        }
+                        name={
+                          showPasswordConfirmation
+                            ? 'eye-outline'
+                            : 'eye-off-outline'
+                        }
+                        size={24}
+                        color='#C1C1C1'
+                      />
+                    </TouchableOpacity>
 
                     <Button
                       onPress={handleClick}

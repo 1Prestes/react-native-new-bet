@@ -4,7 +4,7 @@ export const CustomInput = styled.TextInput`
   border-bottom-width: 1px;
   border-color: #dddddd;
   height: 70px;
-  padding: 26px 30px;
+  padding: 26px 60px 26px 30px;
   font-weight: bold;
   font-style: italic;
   font-size: 15px;

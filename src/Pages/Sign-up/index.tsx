@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { StatusBar } from 'expo-status-bar'
-import { Text, KeyboardAvoidingView, ActivityIndicator } from 'react-native'
-import { AntDesign } from '@expo/vector-icons'
+import {
+  Text,
+  KeyboardAvoidingView,
+  ActivityIndicator,
+  TouchableOpacity
+} from 'react-native'
+import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons'
 import * as yup from 'yup'
 
 import {
@@ -43,6 +48,7 @@ export default function SignUp ({ navigation }: NavigationProps) {
     email: '',
     password: ''
   })
+  const [showPassword, setShowPassword] = useState(false)
 
   const handleChange = (value: string, key: string) => {
     setNewUser({ ...newUser, [key]: value })
@@ -101,12 +107,25 @@ export default function SignUp ({ navigation }: NavigationProps) {
                 onChangeText={(value: string) =>
                   handleChange(value, 'password')
                 }
-                secureTextEntry
+                secureTextEntry={!showPassword}
                 autoCapitalize='none'
                 value={newUser.password}
                 placeholder='Password'
               />
-
+              <TouchableOpacity
+                style={{
+                  position: 'absolute',
+                  right: 25,
+                  top: 162
+                }}
+              >
+                <MaterialCommunityIcons
+                  onPress={() => setShowPassword(!showPassword)}
+                  name={showPassword ? 'eye-outline' : 'eye-off-outline'}
+                  size={24}
+                  color='#C1C1C1'
+                />
+              </TouchableOpacity>
               <Button
                 onPress={handleClick}
                 margin='21px'
